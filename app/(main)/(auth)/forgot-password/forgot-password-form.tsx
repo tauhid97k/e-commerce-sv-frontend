@@ -50,12 +50,6 @@ const ForgotPasswordForm = () => {
         <Button isLoading={form.formState.isSubmitting} className='w-full mb-4'>
           Send password reset code
         </Button>
-        <Link
-          href='/login'
-          className='block text-center text-sm hover:underline focus:underline focus:outline-none whitespace-nowrap'
-        >
-          Go back to login?
-        </Link>
       </form>
     </Form>
   )
