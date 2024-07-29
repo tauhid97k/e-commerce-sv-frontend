@@ -3,7 +3,7 @@ import ForgotPasswordForm from "./forgot-password-form"
 
 const ForgotPasswordPage = () => {
   return (
-    <>
+    <div className='card'>
       <div className='heading'>
         <h1 className='title'>Forgot Password?</h1>
         <p className='description'>
@@ -18,7 +18,7 @@ const ForgotPasswordPage = () => {
       >
         Go back to login?
       </Link>
-    </>
+    </div>
   )
 }
 

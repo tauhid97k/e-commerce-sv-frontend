@@ -43,7 +43,7 @@ const LoginForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' {...field} />
+                  <Input type='email' placeholder='Your email' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -56,7 +56,11 @@ const LoginForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type='password' {...field} />
+                  <Input
+                    type='password'
+                    placeholder='Your password'
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

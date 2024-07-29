@@ -33,7 +33,7 @@ const RegisterForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} autoComplete='off'>
         <FormFieldset disabled={form.formState.isSubmitting}>
           <FormField
             control={form.control}
@@ -42,7 +42,7 @@ const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder='Your full name' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -55,7 +55,7 @@ const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' {...field} />
+                  <Input type='email' placeholder='Your email' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -68,7 +68,11 @@ const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type='password' {...field} />
+                  <Input
+                    type='password'
+                    placeholder='New password'
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,7 +85,11 @@ const RegisterForm = () => {
               <FormItem>
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
-                  <Input type='password_confirmation' {...field} />
+                  <Input
+                    type='password'
+                    placeholder='Confirm password'
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +97,7 @@ const RegisterForm = () => {
           />
         </FormFieldset>
         <Button isLoading={form.formState.isSubmitting} className='w-full'>
-          Login
+          Register
         </Button>
       </form>
     </Form>

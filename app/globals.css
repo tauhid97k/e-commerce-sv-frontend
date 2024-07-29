@@ -6,12 +6,17 @@ body {
   @apply font-poppins font-normal leading-snug text-dark bg-light;
 }
 
+/* Card */
+.card {
+  @apply p-5 rounded-lg bg-white shadow;
+}
+
 /* Heading */
 .heading {
-  @apply text-center relative mb-8;
+  @apply text-center relative border-b pb-2 mb-5;
 }
 .heading .title {
-  @apply text-xl sm:text-2xl uppercase font-medium;
+  @apply text-xl sm:text-2xl font-medium;
 }
 .heading .description {
   @apply text-muted font-light;

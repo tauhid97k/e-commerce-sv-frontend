@@ -3,12 +3,10 @@ import RegisterForm from "./register-form"
 
 const RegisterPage = () => {
   return (
-    <>
+    <div className='card'>
       <div className='heading'>
         <h1 className='title'>Account Registration</h1>
-        <p className='description'>
-          Register a new account with your information
-        </p>
+        <p className='description'>Create a new account</p>
       </div>
       <RegisterForm />
       <div className='flex gap-1.5 justify-center text-center mt-5'>
@@ -20,7 +18,7 @@ const RegisterPage = () => {
           Login
         </Link>
       </div>
-    </>
+    </div>
   )
 }
 
