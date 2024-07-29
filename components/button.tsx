@@ -7,7 +7,7 @@ import { LoaderCircle } from "lucide-react"
 
 // Variants
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap shadow-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
+  "inline-flex items-center justify-center whitespace-nowrap shadow-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70 disabled:pointer-events-none",
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ const buttonVariants = cva(
         dark: "bg-dark text-white hover:bg-darker focus:ring-dark/50",
       },
       size: {
-        default: "py-2 px-4 text-[18px]",
+        default: "py-2 px-4 text-base",
         sm: "py-2 px-3 text-xs",
         icon: "size-10",
       },
@@ -45,7 +45,7 @@ const LoadingIcon = ({
   return (
     <LoaderCircle
       className={cn("animate-spin text-white", {
-        "size-5": buttonSize === "default",
+        "size-5": !buttonSize,
         "size-4": buttonSize === "sm",
       })}
     />
