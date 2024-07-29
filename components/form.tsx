@@ -41,7 +41,7 @@ const FormFieldset = React.forwardRef<HTMLFieldSetElement, FieldsetProps>(
     return (
       <fieldset
         className={cn(
-          "grid gap-2 mb-4 disabled:opacity-70",
+          "grid gap-2 mb-4 disabled:opacity-70 disabled:pointer-events-none",
           {
             "grid-cols-1 md:grid-cols-2 xl:grid-cols-3": grid,
           },
