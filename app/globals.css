@@ -6,6 +6,11 @@ body {
   @apply font-poppins font-normal leading-snug text-dark bg-light;
 }
 
+/* Icon */
+.icon {
+  @apply size-5;
+}
+
 /* Card */
 .card {
   @apply p-5 rounded-lg bg-white shadow;
