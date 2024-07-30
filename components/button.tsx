@@ -1,29 +1,29 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from "@/lib/utils"
-import { LoaderCircle } from "lucide-react"
+import { cn } from '@/lib/utils'
+import { LoaderCircle } from 'lucide-react'
 
 // Variants
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap shadow rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70 disabled:pointer-events-none",
+  'inline-flex items-center justify-center whitespace-nowrap shadow rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70 disabled:pointer-events-none',
   {
     variants: {
       variant: {
         default:
-          "bg-primary hover:bg-primary-dark text-white focus:ring-primary/50",
-        dark: "bg-dark text-white hover:bg-darker focus:ring-dark/50",
+          'bg-primary hover:bg-primary-dark text-white focus:ring-primary/50',
+        dark: 'bg-dark text-white hover:bg-darker focus:ring-dark/50',
       },
       size: {
-        default: "py-2 px-4 text-base",
-        sm: "py-2 px-3 text-xs",
-        icon: "size-10",
+        default: 'py-2 px-4 text-base',
+        sm: 'py-2 px-3 text-xs',
+        icon: 'size-10',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: 'default',
+      size: 'default',
     },
   }
 )
@@ -44,9 +44,9 @@ const LoadingIcon = ({
 }) => {
   return (
     <LoaderCircle
-      className={cn("animate-spin text-white", {
-        "size-5": !buttonSize,
-        "size-4": buttonSize === "sm",
+      className={cn('animate-spin text-white', {
+        'size-5': !buttonSize,
+        'size-4': buttonSize === 'sm',
       })}
     />
   )
@@ -66,10 +66,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : "button"
+    const Comp = asChild ? Slot : 'button'
 
     const content = (
-      <div className='flex items-center gap-1.5'>
+      <div className="flex items-center gap-1.5">
         {isLoading && <LoadingIcon buttonSize={size} />}
         {children}
       </div>
@@ -88,6 +88,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 )
 
-Button.displayName = "Button"
+Button.displayName = 'Button'
 
 export { Button }

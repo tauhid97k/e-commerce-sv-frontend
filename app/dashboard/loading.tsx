@@ -1,9 +1,9 @@
-import { LoaderCircle } from "lucide-react"
+import { LoaderCircle } from 'lucide-react'
 
 const DashboardLoading = () => {
   return (
-    <div className='h-screen grid place-items-center'>
-      <LoaderCircle className='stroke-1 size-12 animate-spin text-primary/70' />
+    <div className="h-full grid place-items-center">
+      <LoaderCircle className="stroke-1 size-12 animate-spin text-primary/70" />
     </div>
   )
 }
