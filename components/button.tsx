@@ -7,12 +7,13 @@ import { LoaderCircle } from 'lucide-react'
 
 // Variants
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap shadow rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-70 disabled:pointer-events-none',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary/50 disabled:opacity-70 disabled:pointer-events-none',
   {
     variants: {
       variant: {
         default:
           'bg-primary hover:bg-primary-dark text-white focus:ring-primary/50',
+        outline: 'border hover:bg-light',
         dark: 'bg-dark text-white hover:bg-darker focus:ring-dark/50',
       },
       size: {

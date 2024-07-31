@@ -23,7 +23,7 @@ const SidebarMenuCollapsible = ({
   const pathName = usePathname()
   const activePath = pathName.startsWith(basePath)
 
-  // Keep collapse menu open if active
+  // Keep active collapse menu open on reload
   useLayoutEffect(() => {
     if (activePath) {
       setOpen(true)
@@ -58,7 +58,7 @@ const SidebarMenuCollapsible = ({
         </button>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="ml-[1.6rem] mt-2">{children}</div>
+        <div className="ml-[1.6rem] my-2 pr-0.5">{children}</div>
       </CollapsibleContent>
     </Collapsible>
   )

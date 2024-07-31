@@ -4,6 +4,7 @@
     "clsx",
     "hookform",
     "lucide",
-    "tailwindcss"
+    "tailwindcss",
+    "zustand"
   ]
 }
