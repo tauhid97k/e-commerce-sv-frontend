@@ -1,12 +1,13 @@
 import { Button } from '@/components/button'
-import { useSidebarStore } from '@/lib/store/sidebarStore'
 import { Menu } from 'lucide-react'
+import { SidebarContext } from '@/app/dashboard/layout'
+import { use } from 'react'
 
 const Header = () => {
-  const { isOpen, setSidebarOpen } = useSidebarStore()
+  const { isOpen, setSidebarOpen } = use(SidebarContext)
 
   return (
-    <header className="h-16 flex items-center bg-white border-b px-5 shadow-sm">
+    <header className="h-16 flex items-center bg-white px-5 border-b">
       <Button
         onClick={() => setSidebarOpen(!isOpen)}
         variant="outline"

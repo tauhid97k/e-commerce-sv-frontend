@@ -3,7 +3,6 @@
 import * as React from 'react'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cva, type VariantProps } from 'class-variance-authority'
-
 import { cn } from '@/lib/utils'
 
 const Sheet = SheetPrimitive.Root
@@ -37,9 +36,9 @@ const sheetVariants = cva(
         top: 'inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
         bottom:
           'inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-        left: 'inset-y-0 left-0 h-full border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+        left: 'inset-y-0 left-0 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
         right:
-          'inset-y-0 right-0 h-full border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
+          'inset-y-0 right-0 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
       },
     },
     defaultVariants: {
@@ -60,7 +59,7 @@ const SheetContent = React.forwardRef<
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}
-      className={cn(sheetVariants({ side }), className)}
+      className={cn('w-72 flex flex-col', sheetVariants({ side }), className)}
       {...props}
     >
       {children}
@@ -68,6 +67,20 @@ const SheetContent = React.forwardRef<
   </SheetPortal>
 ))
 SheetContent.displayName = SheetPrimitive.Content.displayName
+
+const SheetHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      'h-16 flex justify-between items-center flex-wrap border-b px-4',
+      className
+    )}
+    {...props}
+  />
+)
+SheetHeader.displayName = 'SheetHeader'
 
 const SheetTitle = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Title>,
@@ -87,7 +100,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn('font-light text-sm text-muted', className)}
+    className={cn('text-muted font-light', className)}
     {...props}
   />
 ))
@@ -100,6 +113,7 @@ export {
   SheetTrigger,
   SheetClose,
   SheetContent,
+  SheetHeader,
   SheetTitle,
   SheetDescription,
 }

@@ -5,6 +5,7 @@
     "hookform",
     "lucide",
     "tailwindcss",
+    "usehooks",
     "zustand"
   ]
 }

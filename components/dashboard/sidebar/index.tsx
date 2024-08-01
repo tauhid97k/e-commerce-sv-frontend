@@ -1,64 +1,38 @@
-import SidebarHeader from './header'
-import SidebarMenu from './menu'
-import { useSidebarStore } from '@/lib/store/sidebarStore'
-import { useMediaQuery } from 'react-responsive'
-import { cn } from '@/lib/utils'
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetTitle,
-} from '@/components/sheet'
-import { useLayoutEffect } from 'react'
+import SidebarDesktop from './desktop'
+import SidebarMobile from './mobile'
+import { useMediaQuery } from 'usehooks-ts'
 import { usePathname } from 'next/navigation'
+import { SidebarContext } from '@/app/dashboard/layout'
+import { use, useLayoutEffect } from 'react'
 
 const Sidebar = () => {
+  const { setSidebarOpen } = use(SidebarContext)
   const pathName = usePathname()
-  const { isOpen, setSidebarOpen } = useSidebarStore()
-  const isMobile = useMediaQuery({
-    query: '(max-width: 1024px)',
+  const isDesktop = useMediaQuery('(min-width: 1024px)', {
+    initializeWithValue: false,
   })
 
-  // Close sidebar when route changes on mobile
+  /**
+   * On initial load...
+   * Desktop sidebar is open on desktop.
+   * Mobile sidebar is closed on mobile.
+   * Closes mobile sidebar on route changes.
+   */
   useLayoutEffect(() => {
-    if (isMobile) {
+    if (isDesktop) {
+      setSidebarOpen(true)
+    } else {
       setSidebarOpen(false)
     }
-  }, [isMobile, pathName, setSidebarOpen])
+  }, [isDesktop, pathName, setSidebarOpen])
 
-  return (
-    <>
-      {isMobile ? (
-        <Sheet open={isOpen} onOpenChange={setSidebarOpen}>
-          <SheetContent
-            side="left"
-            className="w-72 flex flex-col"
-            aria-describedby="sidebar"
-          >
-            <SheetTitle className="sr-only">Dashboard Sidebar</SheetTitle>
-            <SheetDescription className="sr-only">
-              Dashboard sidebar navigation menu
-            </SheetDescription>
-            <SidebarHeader />
-            <SidebarMenu />
-          </SheetContent>
-        </Sheet>
-      ) : (
-        <aside
-          className={cn(
-            'w-72 hidden lg:flex flex-col bg-white border-r shadow-sm transition-[margin] duration-300',
-            {
-              'ml-0': isOpen,
-              '-ml-72': !isOpen,
-            }
-          )}
-        >
-          <SidebarHeader />
-          <SidebarMenu />
-        </aside>
-      )}
-    </>
-  )
+  // Show desktop sidebar
+  if (isDesktop) {
+    return <SidebarDesktop />
+  }
+
+  // Show mobile sidebar
+  return <SidebarMobile />
 }
 
 export default Sidebar

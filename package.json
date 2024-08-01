@@ -22,11 +22,10 @@
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
     "react-hook-form": "^7.52.1",
-    "react-responsive": "^10.0.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8",
-    "zustand": "^4.5.4"
+    "usehooks-ts": "^3.1.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
