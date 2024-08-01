@@ -12,7 +12,7 @@ interface SidebarContextType {
 
 // Sidebar Context
 export const SidebarContext = createContext<SidebarContextType>({
-  isOpen: false,
+  isOpen: true,
   setSidebarOpen: () => {},
 })
 

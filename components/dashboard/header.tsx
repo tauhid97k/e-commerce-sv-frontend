@@ -1,6 +1,6 @@
 import { Button } from '@/components/button'
-import { Menu } from 'lucide-react'
 import { SidebarContext } from '@/app/dashboard/layout'
+import { Menu } from 'lucide-react'
 import { use } from 'react'
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header className="h-16 flex items-center bg-white px-5 border-b">
       <Button
-        onClick={() => setSidebarOpen(!isOpen)}
+        onClick={() => setSidebarOpen(() => !isOpen)}
         variant="outline"
         size="icon"
       >

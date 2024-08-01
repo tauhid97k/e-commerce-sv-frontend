@@ -3,7 +3,7 @@ import Footer from '@/components/main/footer'
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col">
       <Navbar />
       <main className="container flex-1">{children}</main>
       <Footer />
