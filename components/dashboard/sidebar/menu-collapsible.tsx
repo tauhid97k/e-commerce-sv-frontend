@@ -34,7 +34,7 @@ const SidebarMenuCollapsible = ({
     <Collapsible
       open={open}
       onOpenChange={setOpen}
-      className={cn('border-l-[3px] border-transparent mb-2', {
+      className={cn('border-l-2 border-transparent mb-2', {
         'border-primary': activePath,
       })}
     >
@@ -58,7 +58,7 @@ const SidebarMenuCollapsible = ({
         </button>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="ml-[1.6rem] my-2 pr-0.5">{children}</div>
+        <div className="ml-[1.6rem] pr-0.5 border-l">{children}</div>
       </CollapsibleContent>
     </Collapsible>
   )

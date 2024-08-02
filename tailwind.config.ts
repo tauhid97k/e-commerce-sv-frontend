@@ -14,10 +14,11 @@ const config: Config = {
       colors: {
         primary: '#6366f1',
         'primary-dark': '#4f46e5',
-        muted: '#94a3b8',
-        light: '#f1f5f9',
-        dark: '#334155',
-        darker: '#1e293b',
+        muted: '#9ca3af',
+        light: '#f3f4f6',
+        lighter: '#f9fafb',
+        dark: '#374151',
+        darker: '#1f2937',
       },
       keyframes: {
         'collapsible-expand': {
