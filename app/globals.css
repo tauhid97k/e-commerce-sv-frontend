@@ -6,11 +6,6 @@ body {
   @apply font-poppins font-normal leading-snug text-dark bg-lighter;
 }
 
-/* Global */
-:focus-visible {
-  @apply outline-primary/50;
-}
-
 /* Icon */
 .icon {
   @apply size-5;

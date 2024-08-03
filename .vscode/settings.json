@@ -2,9 +2,10 @@
   "css.lint.unknownAtRules": "ignore",
   "cSpell.words": [
     "clsx",
+    "headlessui",
     "hookform",
     "lucide",
     "tailwindcss",
-    "usehooks",
+    "usehooks"
   ]
 }

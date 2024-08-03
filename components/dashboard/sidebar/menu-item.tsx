@@ -18,7 +18,7 @@ const SidebarMenuItem = ({
     <Link
       href={href}
       className={cn(
-        'flex w-full items-center gap-2 px-4 py-2.5 mb-2 transition-colors border-l-2 border-transparent',
+        'flex w-full items-center gap-2 px-4 py-2.5 mb-2 transition-colors border-l-2 border-transparent focus-within:outline-primary/50',
         {
           'border-primary bg-light': activeLink,
           'hover:bg-light': !activeLink,

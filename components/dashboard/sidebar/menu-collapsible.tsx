@@ -41,7 +41,7 @@ const SidebarMenuCollapsible = ({
       <CollapsibleTrigger asChild>
         <button
           className={cn(
-            'flex w-full justify-between items-center gap-2 px-4 py-2.5 transition-colors',
+            'flex w-full justify-between items-center gap-2 px-4 py-2.5 focus-within:outline-primary/50 transition-colors',
             {
               'bg-light': activePath || open,
               'hover:bg-light': !activePath,
