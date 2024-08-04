@@ -1,27 +1,42 @@
+import { Fragment, ElementType, ComponentPropsWithRef } from 'react'
+import {
+  Menu,
+  MenuProps,
+  MenuButton,
+  MenuButtonProps,
+  MenuSection,
+  MenuSectionProps,
+  MenuSeparator,
+  MenuSeparatorProps,
+  MenuHeading,
+  MenuHeadingProps,
+  MenuItem,
+  MenuItemProps,
+  MenuItems,
+  MenuItemsProps,
+} from '@headlessui/react'
 import { cn } from '@/lib/utils'
-import React, { Fragment, ComponentProps, ElementType } from 'react'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
-// Root
-export const Dropdown = ({
-  children,
-  ...props
-}: {
-  children: React.ReactNode
-}) => {
+// Dropdown Root
+type DropdownProps = MenuProps & { children: React.ReactNode }
+
+const Dropdown = ({ children, ...props }: DropdownProps) => {
   return <Menu {...props}>{children}</Menu>
 }
 
-// Trigger
-type DropdownTriggerProps<T extends ElementType> = {
-  children: React.ReactNode
+// Dropdown Trigger
+type DropdownTriggerProps<T extends ElementType = typeof Fragment> = Omit<
+  MenuButtonProps,
+  'as'
+> & {
   as?: T
+  children: React.ReactNode
   className?: string
-} & ComponentProps<T>
+} & ComponentPropsWithRef<T>
 
-export const DropdownTrigger = <T extends ElementType = typeof Fragment>({
-  children,
+const DropdownTrigger = <T extends ElementType = typeof Fragment>({
   as = Fragment,
+  children,
   className,
   ...props
 }: DropdownTriggerProps<T>) => {
@@ -36,14 +51,35 @@ export const DropdownTrigger = <T extends ElementType = typeof Fragment>({
   )
 }
 
-// Dropdown Items
-export const DropdownItems = ({
+// Dropdown Section
+type DropdownSectionProps = MenuSectionProps & { children: React.ReactNode }
+
+const DropdownSection = ({ children, ...props }: DropdownSectionProps) => {
+  return <MenuSection {...props}>{children}</MenuSection>
+}
+
+// Dropdown Heading
+type DropdownHeadingProps = MenuHeadingProps & { children: React.ReactNode }
+
+const DropdownHeading = ({
   children,
   className,
-}: {
-  children: React.ReactNode
-  className?: string
-}) => {
+  ...props
+}: DropdownHeadingProps) => {
+  return (
+    <MenuHeading
+      className={cn('flex justify-between items-center gap-4 p-3', className)}
+      {...props}
+    >
+      {children}
+    </MenuHeading>
+  )
+}
+
+// Dropdown Items
+type DropdownItemsProps = MenuItemsProps & { children: React.ReactNode }
+
+const DropdownItems = ({ children, className }: DropdownItemsProps) => {
   return (
     <MenuItems
       modal={false}
@@ -59,15 +95,23 @@ export const DropdownItems = ({
   )
 }
 
+// Dropdown Separator
+const DropdownSeparator = ({ ...props }: MenuSeparatorProps) => (
+  <MenuSeparator className="border-b" {...props} />
+)
+
 // Dropdown Item
-type DropdownItemProps<T extends ElementType> = {
-  children: React.ReactNode
+type DropdownItemProps<T extends ElementType = typeof Fragment> = Omit<
+  MenuItemProps,
+  'as'
+> & {
   as?: T
   destructive?: boolean
+  children: React.ReactNode
   className?: string
-} & ComponentProps<T>
+} & ComponentPropsWithRef<T>
 
-export const DropdownItem = <T extends ElementType = typeof Fragment>({
+const DropdownItem = <T extends ElementType = typeof Fragment>({
   children,
   as = Fragment,
   destructive,
@@ -89,4 +133,14 @@ export const DropdownItem = <T extends ElementType = typeof Fragment>({
       {children}
     </MenuItem>
   )
+}
+
+export {
+  Dropdown,
+  DropdownTrigger,
+  DropdownSection,
+  DropdownHeading,
+  DropdownItems,
+  DropdownSeparator,
+  DropdownItem,
 }

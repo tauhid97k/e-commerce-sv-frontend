@@ -1,6 +1,13 @@
-import { Bell } from 'lucide-react'
+import { Bell, ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/button'
-import { Dropdown, DropdownItems, DropdownTrigger } from '@/components/dropdown'
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownItems,
+  DropdownSection,
+  DropdownHeading,
+  DropdownSeparator,
+} from '@/components/dropdown'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
@@ -61,47 +68,55 @@ const Notification = () => {
         <Bell className="icon" />
         <span className="sr-only">Toggle notification</span>
       </DropdownTrigger>
-      <DropdownItems className="w-72">
-        <div className="flex justify-between items-center border-b gap-4 p-3">
-          <h4>Notifications</h4>
-          <button className="text-primary text-sm hover:underline">
-            Mark all as read
-          </button>
-        </div>
-
-        <div className="bg-white max-h-64 overflow-y-auto divide-y divide-lighter">
-          {notifications.map((item) => (
-            <Link
-              key={item.id}
-              href="#"
-              className="flex flex-col gap-1.5 p-3 hover:bg-lighter"
-            >
-              <h5
-                className={cn('text-sm', {
-                  'text-dark/80': item.read,
-                  'font-medium': !item.read,
-                })}
-              >
-                {item.title}
-              </h5>
-              <span
-                className={cn('text-[13px]', {
-                  'text-muted': item.read,
-                  'text-dark/80': !item.read,
-                })}
-              >
-                {item.timestamp}
-              </span>
-            </Link>
-          ))}
-        </div>
-
-        <Link
-          href="#"
-          className="text-sm tracking-wide flex justify-center border-t p-3 hover:bg-lighter"
-        >
-          See All Notifications
-        </Link>
+      <DropdownItems className="w-80">
+        <DropdownSection>
+          <DropdownHeading>
+            <h4>Notifications</h4>
+            <button className="text-primary text-sm hover:underline">
+              Mark all as read
+            </button>
+          </DropdownHeading>
+          <DropdownSeparator />
+          <div className="bg-white max-h-72 overflow-y-auto divide-y divide-light">
+            {notifications.length > 0 ? (
+              notifications.map((item) => (
+                <Link
+                  key={item.id}
+                  href="#"
+                  className={cn('flex flex-col gap-0.5 p-3 hover:bg-lighter', {
+                    'text-dark/80': item.read,
+                  })}
+                >
+                  <h5
+                    className={cn('text-sm', {
+                      'font-medium': !item.read,
+                    })}
+                  >
+                    {item.title}
+                  </h5>
+                  <span
+                    className={cn('text-[13px]', {
+                      'text-muted': item.read,
+                    })}
+                  >
+                    {item.timestamp}
+                  </span>
+                </Link>
+              ))
+            ) : (
+              <p className="h-44 flex justify-center items-center p-3 text-muted">
+                Nothing to show
+              </p>
+            )}
+          </div>
+          <DropdownSeparator />
+          <Link
+            href="#"
+            className="text-sm tracking-wide flex justify-center p-3 hover:bg-lighter"
+          >
+            See All Notifications
+          </Link>
+        </DropdownSection>
       </DropdownItems>
     </Dropdown>
   )
