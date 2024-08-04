@@ -8,7 +8,7 @@ body {
 
 /* Icon */
 .icon {
-  @apply size-5;
+  @apply size-[22px] stroke-[1.5] leading-none;
 }
 
 /* Card */

@@ -1,9 +1,10 @@
-import { Button } from '@/components/button'
 import { CircleUser, LogOut, Menu, UserRoundCog } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
 import { SidebarContext } from '@/app/dashboard/layout'
 import { use } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
+import { Button } from '@/components/button'
 import Link from 'next/link'
+import Notification from '@/components/notification'
 import {
   Dropdown,
   DropdownItem,
@@ -29,12 +30,14 @@ const Header = () => {
       </Button>
 
       <div className="flex items-center gap-4">
+        <Notification />
         <Dropdown>
-          <DropdownTrigger className="flex items-center justify-between gap-x-2 py-1 pl-3 pr-1 rounded-full">
+          <DropdownTrigger
+            as="button"
+            className="flex items-center justify-between gap-x-2 rounded-full"
+          >
             <span className="sr-only">Toggle user menu</span>
-            <span className="font-medium truncate max-w-[7.5rem]">
-              Mason Alex
-            </span>
+            <span className="truncate max-w-[7.5rem]">Mason Alex</span>
             <Avatar>
               <AvatarImage
                 src="https://github.com/shadcn.png"
@@ -45,12 +48,12 @@ const Header = () => {
               </AvatarFallback>
             </Avatar>
           </DropdownTrigger>
-          <DropdownItems>
+          <DropdownItems className="p-2">
             <DropdownItem as={Link} href="/dashboard/profile">
               <UserRoundCog className="icon" />
               <span>Profile</span>
             </DropdownItem>
-            <DropdownItem as="button" onClick={handleLogout}>
+            <DropdownItem as="button" onClick={handleLogout} destructive>
               <LogOut className="icon" />
               <span>Logout</span>
             </DropdownItem>

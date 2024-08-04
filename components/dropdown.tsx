@@ -1,12 +1,6 @@
 import { cn } from '@/lib/utils'
 import React, { Fragment, ComponentProps, ElementType } from 'react'
-import {
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  Transition,
-} from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 // Root
 export const Dropdown = ({
@@ -19,16 +13,18 @@ export const Dropdown = ({
 }
 
 // Trigger
-export const DropdownTrigger = ({
+type DropdownTriggerProps<T extends ElementType> = {
+  children: React.ReactNode
+  as?: T
+  className?: string
+} & ComponentProps<T>
+
+export const DropdownTrigger = <T extends ElementType = typeof Fragment>({
   children,
-  as = 'button',
+  as = Fragment,
   className,
   ...props
-}: {
-  children: React.ReactNode
-  as?: ElementType
-  className?: string
-}) => {
+}: DropdownTriggerProps<T>) => {
   return (
     <MenuButton
       as={as}
@@ -49,24 +45,17 @@ export const DropdownItems = ({
   className?: string
 }) => {
   return (
-    <Transition
-      enter="transition ease-out duration-75"
-      enterFrom="opacity-0 scale-95"
-      enterTo="opacity-100 scale-100"
-      leave="transition ease-in duration-100"
-      leaveFrom="opacity-100 scale-100"
-      leaveTo="opacity-0 scale-95"
+    <MenuItems
+      modal={false}
+      transition
+      anchor="bottom end"
+      className={cn(
+        'w-44 origin-top-right transition ease-out data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-300 [--anchor-padding:16px] bg-white shadow-lg rounded-md mt-2 ring-1 ring-gray-200 focus:outline-none',
+        className
+      )}
     >
-      <MenuItems
-        anchor="bottom end"
-        className={cn(
-          'min-w-44 z-50 bg-white shadow-lg rounded-md p-2 mt-1 ring-1 ring-gray-200 focus:outline-none',
-          className
-        )}
-      >
-        {children}
-      </MenuItems>
-    </Transition>
+      {children}
+    </MenuItems>
   )
 }
 
@@ -74,12 +63,14 @@ export const DropdownItems = ({
 type DropdownItemProps<T extends ElementType> = {
   children: React.ReactNode
   as?: T
+  destructive?: boolean
   className?: string
 } & ComponentProps<T>
 
 export const DropdownItem = <T extends ElementType = typeof Fragment>({
   children,
   as = Fragment,
+  destructive,
   className,
   ...props
 }: DropdownItemProps<T>) => {
@@ -87,7 +78,10 @@ export const DropdownItem = <T extends ElementType = typeof Fragment>({
     <MenuItem
       as={as}
       className={cn(
-        'w-full flex items-center gap-x-1.5 py-2 px-3 rounded-md data-[focus]:bg-light focus:outline-none font-medium cursor-pointer',
+        'w-full flex items-center gap-x-1.5 py-2 px-3 rounded-md data-[focus]:bg-light focus:outline-none cursor-pointer',
+        {
+          'text-red-500 data-[focus]:bg-red-50': destructive,
+        },
         className
       )}
       {...props}
