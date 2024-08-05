@@ -1,16 +1,16 @@
-import { CircleUser, LogOut, Menu, UserRoundCog } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
-import { SidebarContext } from '@/app/dashboard/layout'
-import { use } from 'react'
-import { Button } from '@/components/button'
 import Link from 'next/link'
-import Notification from '@/components/notification'
 import {
   Dropdown,
   DropdownItem,
   DropdownItems,
   DropdownTrigger,
 } from '@/components/dropdown'
+import Notification from '@/components/dashboard/notification'
+import { CircleUser, LogOut, Menu, UserRoundCog } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
+import { SidebarContext } from '@/app/dashboard/layout'
+import { Button } from '@/components/button'
+import { use } from 'react'
 
 const Header = () => {
   const { isOpen, setSidebarOpen } = use(SidebarContext)

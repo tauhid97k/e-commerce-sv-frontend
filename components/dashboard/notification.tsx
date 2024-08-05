@@ -1,4 +1,4 @@
-import { Bell, ShoppingBag } from 'lucide-react'
+import { Bell } from 'lucide-react'
 import { Button } from '@/components/button'
 import {
   Dropdown,
