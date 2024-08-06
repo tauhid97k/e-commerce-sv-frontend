@@ -13,6 +13,8 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-primary hover:bg-primary-dark text-white focus:ring-primary/50',
+        secondary: 'bg-gray-300 hover:bg-gray-400/70',
+        destructive: 'bg-red-500 text-white hover:bg-red-600',
         outline: 'border hover:bg-light',
         dark: 'bg-dark text-white hover:bg-darker focus:ring-dark/50',
       },
