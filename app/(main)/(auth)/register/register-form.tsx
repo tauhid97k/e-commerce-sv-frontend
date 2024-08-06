@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
   Form,
   FormFieldset,
@@ -11,38 +11,54 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/form"
-import { Input } from "@/components/input"
-import { Button } from "@/components/button"
-import { registerValidator } from "@/validators/authValidator"
+} from '@/components/form'
+import { Input } from '@/components/input'
+import { Button } from '@/components/button'
+import { registerValidator } from '@/validators/authValidator'
+import { useAxios } from '@/lib/axios'
+import { useMutation } from '@tanstack/react-query'
 
 const RegisterForm = () => {
+  const axios = useAxios()
+
+  const { mutate: register, isPending } = useMutation({
+    mutationFn: (formData: z.infer<typeof registerValidator>) =>
+      axios.post('/login', formData),
+  })
+
   const form = useForm<z.infer<typeof registerValidator>>({
     resolver: zodResolver(registerValidator),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
     },
   })
 
   const onSubmit = (values: z.infer<typeof registerValidator>) => {
-    // Submit form
+    register(values, {
+      onError: (data) => {
+        // Error handling
+      },
+      onSuccess: (data) => {
+        // Success handling
+      },
+    })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} autoComplete='off'>
-        <FormFieldset disabled={form.formState.isSubmitting}>
+      <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
+        <FormFieldset disabled={isPending}>
           <FormField
             control={form.control}
-            name='name'
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='Your full name' {...field} />
+                  <Input placeholder="Your full name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -50,12 +66,12 @@ const RegisterForm = () => {
           />
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' placeholder='Your email' {...field} />
+                  <Input type="email" placeholder="Your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,14 +79,14 @@ const RegisterForm = () => {
           />
           <FormField
             control={form.control}
-            name='password'
+            name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    type='password'
-                    placeholder='New password'
+                    type="password"
+                    placeholder="New password"
                     {...field}
                   />
                 </FormControl>
@@ -80,14 +96,14 @@ const RegisterForm = () => {
           />
           <FormField
             control={form.control}
-            name='password_confirmation'
+            name="password_confirmation"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Confirm Password</FormLabel>
                 <FormControl>
                   <Input
-                    type='password'
-                    placeholder='Confirm password'
+                    type="password"
+                    placeholder="Confirm password"
                     {...field}
                   />
                 </FormControl>
@@ -96,7 +112,7 @@ const RegisterForm = () => {
             )}
           />
         </FormFieldset>
-        <Button isLoading={form.formState.isSubmitting} className='w-full'>
+        <Button isLoading={isPending} className="w-full">
           Register
         </Button>
       </form>

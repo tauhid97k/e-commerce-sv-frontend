@@ -6,6 +6,7 @@
     "hookform",
     "lucide",
     "tailwindcss",
+    "tanstack",
     "usehooks"
   ]
 }

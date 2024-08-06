@@ -12,13 +12,22 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/form'
+import Link from 'next/link'
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { loginValidator } from '@/validators/authValidator'
 import { Checkbox } from '@/components/checkbox'
-import Link from 'next/link'
+import { useAxios } from '@/lib/axios'
+import { useMutation } from '@tanstack/react-query'
 
 const LoginForm = () => {
+  const axios = useAxios()
+
+  const { mutate: login, isPending } = useMutation({
+    mutationFn: (formData: z.infer<typeof loginValidator>) =>
+      axios.post('/login', formData),
+  })
+
   const form = useForm<z.infer<typeof loginValidator>>({
     resolver: zodResolver(loginValidator),
     defaultValues: {
@@ -29,13 +38,20 @@ const LoginForm = () => {
   })
 
   const onSubmit = (values: z.infer<typeof loginValidator>) => {
-    // Submit form
+    login(values, {
+      onError: (data) => {
+        // Error handling
+      },
+      onSuccess: (data) => {
+        // Success handling
+      },
+    })
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormFieldset disabled={form.formState.isSubmitting}>
+        <FormFieldset disabled={isPending}>
           <FormField
             control={form.control}
             name="email"
@@ -93,7 +109,7 @@ const LoginForm = () => {
             </Link>
           </div>
         </FormFieldset>
-        <Button isLoading={form.formState.isSubmitting} className="w-full">
+        <Button isLoading={isPending} className="w-full">
           Login
         </Button>
       </form>

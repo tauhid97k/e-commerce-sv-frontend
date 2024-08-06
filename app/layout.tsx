@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 
+// Providers
+import QueryProvider from '@/providers/query-provider'
+
 // Config Poppins Font
 const poppins = localFont({
   src: [
@@ -41,7 +44,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable}`}>{children}</body>
+      <body className={`${poppins.variable}`}>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   )
 }
