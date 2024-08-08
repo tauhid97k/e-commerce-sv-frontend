@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { FieldPath, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import {
   Form,
@@ -20,6 +20,8 @@ import { Checkbox } from '@/components/checkbox'
 import { useAxios } from '@/lib/axios'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { handleError, handleSuccess } from '@/lib/handleResponse'
+import { toast } from 'sonner'
 
 const LoginForm = () => {
   const axios = useAxios()
@@ -57,9 +59,20 @@ const LoginForm = () => {
     // Login
     login(values, {
       onError: (data) => {
-        // Error Handling
+        const { validationErrors, error } = handleError(data)
+        if (validationErrors.length) {
+          validationErrors.map(({ field, message }) => {
+            form.setError(field as FieldPath<typeof values>, {
+              message,
+            })
+          })
+        } else if (error) {
+          toast.error(error)
+        }
       },
       onSuccess: (data) => {
+        const { message } = handleSuccess(data)
+        toast.success(message)
         router.replace('/dashboard')
       },
     })

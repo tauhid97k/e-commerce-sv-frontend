@@ -4,6 +4,7 @@ import './globals.css'
 
 import NextTopLoader from 'nextjs-toploader'
 import QueryProvider from '@/providers/query-provider'
+import Toaster from '@/components/toaster'
 
 // Config Poppins Font
 const poppins = localFont({
@@ -46,7 +47,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable}`}>
         <QueryProvider>
-          <NextTopLoader height={2} />
+          <NextTopLoader height={2} color="#6366f1" showSpinner={false} />
+          <Toaster />
           {children}
         </QueryProvider>
       </body>

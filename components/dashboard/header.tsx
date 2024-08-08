@@ -17,6 +17,8 @@ import { FormEvent, use } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAxios } from '@/lib/axios'
 import { useRouter } from 'next/navigation'
+import { handleSuccess } from '@/lib/handleResponse'
+import { toast } from 'sonner'
 
 const Header = ({ authUser }: { authUser: AuthUser }) => {
   const { isOpen, setSidebarOpen } = use(SidebarContext)
@@ -32,7 +34,11 @@ const Header = ({ authUser }: { authUser: AuthUser }) => {
     event.preventDefault()
 
     logout(undefined, {
-      onSuccess: () => router.replace('/login'),
+      onSuccess: (data) => {
+        const { message } = handleSuccess(data)
+        toast.success(message)
+        router.replace('/login')
+      },
     })
   }
 
