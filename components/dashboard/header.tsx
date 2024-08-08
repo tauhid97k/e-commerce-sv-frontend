@@ -12,13 +12,29 @@ import { CircleUser, LogOut, Menu, UserRoundCog } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
 import { SidebarContext } from '@/providers/sidebar-provider'
 import { Button } from '@/components/button'
-import { use } from 'react'
+import { AuthUser } from '@/lib/dataTypes'
+import { FormEvent, use } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { useAxios } from '@/lib/axios'
+import { useRouter } from 'next/navigation'
 
-const Header = () => {
+const Header = ({ authUser }: { authUser: AuthUser }) => {
   const { isOpen, setSidebarOpen } = use(SidebarContext)
+  const router = useRouter()
+  const axios = useAxios()
+
+  const { mutate: logout } = useMutation({
+    mutationFn: () => axios.post('/logout'),
+  })
 
   // Logout
-  const handleLogout = () => {}
+  const handleLogout = (event: FormEvent) => {
+    event.preventDefault()
+
+    logout(undefined, {
+      onSuccess: () => router.replace('/login'),
+    })
+  }
 
   return (
     <header className="h-16 flex justify-between items-center bg-white px-5 border-b">
@@ -39,7 +55,7 @@ const Header = () => {
             className="flex items-center justify-between gap-x-2 rounded-full"
           >
             <span className="sr-only">Toggle user menu</span>
-            <span className="truncate max-w-[7.5rem]">Mason Alex</span>
+            <span className="truncate max-w-[7.5rem]">{authUser.name}</span>
             <Avatar>
               <AvatarImage
                 src="https://github.com/shadcn.png"
@@ -55,10 +71,12 @@ const Header = () => {
               <UserRoundCog className="icon" />
               <span>Profile</span>
             </DropdownItem>
-            <DropdownItem as="button" onClick={handleLogout} destructive>
-              <LogOut className="icon" />
-              <span>Logout</span>
-            </DropdownItem>
+            <form onSubmit={handleLogout}>
+              <DropdownItem as="button" type="submit" destructive>
+                <LogOut className="icon" />
+                <span>Logout</span>
+              </DropdownItem>
+            </form>
           </DropdownItems>
         </Dropdown>
       </div>
