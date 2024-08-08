@@ -1,9 +1,9 @@
 import Navbar from '@/components/main/navbar'
 import Footer from '@/components/main/footer'
-import { getUser } from '@/lib/auth'
+import { getAuth } from '@/lib/auth'
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
-  const user = await getUser()
+  const { user } = await getAuth()
 
   return (
     <div className="flex flex-col">

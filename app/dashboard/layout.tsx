@@ -1,10 +1,10 @@
 import Header from '@/components/dashboard/header'
 import Sidebar from '@/components/dashboard/sidebar'
 import SidebarProvider from '@/providers/sidebar-provider'
-import { getUser } from '@/lib/auth'
+import { getAuth } from '@/lib/auth'
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-  const user = await getUser()
+  const { user } = await getAuth()
 
   return (
     <SidebarProvider>

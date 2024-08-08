@@ -60,7 +60,7 @@ const LoginForm = () => {
         // Error Handling
       },
       onSuccess: (data) => {
-        router.push('/dashboard')
+        router.replace('/dashboard')
       },
     })
   }
