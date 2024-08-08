@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 
-// Providers
+import NextTopLoader from 'nextjs-toploader'
 import QueryProvider from '@/providers/query-provider'
 
 // Config Poppins Font
@@ -45,7 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <NextTopLoader height={2} />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   )
