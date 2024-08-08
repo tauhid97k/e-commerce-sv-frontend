@@ -19,15 +19,27 @@ import { loginValidator } from '@/validators/authValidator'
 import { Checkbox } from '@/components/checkbox'
 import { useAxios } from '@/lib/axios'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 
 const LoginForm = () => {
   const axios = useAxios()
+  const router = useRouter()
 
+  // Get CSRF Token (Must do this first otherwise 419 error will occur)
+  const csrfCookie = useMutation({
+    mutationFn: () =>
+      axios.get(`/csrf-cookie`, {
+        withCredentials: true,
+      }),
+  })
+
+  // Login Request
   const { mutate: login, isPending } = useMutation({
     mutationFn: (formData: z.infer<typeof loginValidator>) =>
       axios.post('/login', formData),
   })
 
+  // Form Config
   const form = useForm<z.infer<typeof loginValidator>>({
     resolver: zodResolver(loginValidator),
     defaultValues: {
@@ -37,13 +49,18 @@ const LoginForm = () => {
     },
   })
 
+  // Login Form Handler
   const onSubmit = (values: z.infer<typeof loginValidator>) => {
+    // Set CSRF Token
+    csrfCookie.mutate()
+
+    // Login
     login(values, {
       onError: (data) => {
-        // Error handling
+        // Error Handling
       },
       onSuccess: (data) => {
-        // Success handling
+        router.push('/dashboard')
       },
     })
   }
@@ -59,7 +76,7 @@ const LoginForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="Your email" {...field} />
+                  <Input type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -72,11 +89,7 @@ const LoginForm = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Your password"
-                    {...field}
-                  />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

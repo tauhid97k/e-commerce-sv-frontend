@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
   Form,
   FormFieldset,
@@ -11,17 +11,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/form"
-import { Input } from "@/components/input"
-import { Button } from "@/components/button"
-import { forgotPasswordValidator } from "@/validators/authValidator"
-import Link from "next/link"
+} from '@/components/form'
+import { Input } from '@/components/input'
+import { Button } from '@/components/button'
+import { forgotPasswordValidator } from '@/validators/authValidator'
+import Link from 'next/link'
 
 const ForgotPasswordForm = () => {
   const form = useForm<z.infer<typeof forgotPasswordValidator>>({
     resolver: zodResolver(forgotPasswordValidator),
     defaultValues: {
-      email: "",
+      email: '',
     },
   })
 
@@ -35,23 +35,19 @@ const ForgotPasswordForm = () => {
         <FormFieldset disabled={form.formState.isSubmitting}>
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    type='email'
-                    placeholder='Your account email'
-                    {...field}
-                  />
+                  <Input type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </FormFieldset>
-        <Button isLoading={form.formState.isSubmitting} className='w-full mb-4'>
+        <Button isLoading={form.formState.isSubmitting} className="w-full mb-4">
           Send password reset code
         </Button>
       </form>

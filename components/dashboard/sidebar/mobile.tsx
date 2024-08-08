@@ -8,7 +8,7 @@ import {
 } from '@/components/sheet'
 import { X } from 'lucide-react'
 import { Button } from '@/components/button'
-import { SidebarContext } from '@/app/dashboard/layout'
+import { SidebarContext } from '@/providers/sidebar-provider'
 import { use } from 'react'
 import SidebarMenu from './menu'
 

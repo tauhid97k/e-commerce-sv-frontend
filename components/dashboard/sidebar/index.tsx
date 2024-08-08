@@ -1,8 +1,10 @@
+'use client'
+
 import SidebarDesktop from './desktop'
 import SidebarMobile from './mobile'
 import { useMediaQuery } from 'usehooks-ts'
 import { usePathname } from 'next/navigation'
-import { SidebarContext } from '@/app/dashboard/layout'
+import { SidebarContext } from '@/providers/sidebar-provider'
 import { use, useLayoutEffect } from 'react'
 
 const Sidebar = () => {

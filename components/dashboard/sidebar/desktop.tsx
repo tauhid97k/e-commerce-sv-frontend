@@ -1,5 +1,5 @@
 import SidebarMenu from './menu'
-import { SidebarContext } from '@/app/dashboard/layout'
+import { SidebarContext } from '@/providers/sidebar-provider'
 import { use } from 'react'
 import { cn } from '@/lib/utils'
 

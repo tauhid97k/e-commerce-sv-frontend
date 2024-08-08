@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import {
   Dropdown,
@@ -8,7 +10,7 @@ import {
 import Notification from '@/components/dashboard/notification'
 import { CircleUser, LogOut, Menu, UserRoundCog } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
-import { SidebarContext } from '@/app/dashboard/layout'
+import { SidebarContext } from '@/providers/sidebar-provider'
 import { Button } from '@/components/button'
 import { use } from 'react'
 
