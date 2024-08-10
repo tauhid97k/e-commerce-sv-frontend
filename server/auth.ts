@@ -1,7 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import { BASE_API_URL } from './api'
+import { APP_URL, BASE_API_URL } from './config'
 
 // Get Auth User and Status
 export const getAuth = async () => {
@@ -10,7 +10,7 @@ export const getAuth = async () => {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        Referer: 'localhost:3000',
+        Referer: APP_URL,
         Cookie: cookies().toString(),
       },
       credentials: 'include',

@@ -12,7 +12,7 @@ import { CircleUser, LogOut, Menu, UserRoundCog } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/avatar'
 import { SidebarContext } from '@/providers/sidebar-provider'
 import { Button } from '@/components/button'
-import { AuthUser } from '@/lib/dataTypes'
+import { User } from '@/lib/dataTypes'
 import { FormEvent, use } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAxios } from '@/lib/axios'
@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation'
 import { handleSuccess } from '@/lib/handleResponse'
 import { toast } from 'sonner'
 
-const Header = ({ authUser }: { authUser: AuthUser }) => {
+const Header = ({ authUser }: { authUser: User }) => {
   const { isOpen, setSidebarOpen } = use(SidebarContext)
   const router = useRouter()
   const axios = useAxios()
@@ -43,7 +43,7 @@ const Header = ({ authUser }: { authUser: AuthUser }) => {
   }
 
   return (
-    <header className="h-16 flex justify-between items-center bg-white px-5 border-b">
+    <header className="h-16 shrink-0 sticky top-0 flex justify-between items-center bg-white px-5 border-b">
       <Button
         onClick={() => setSidebarOpen(() => !isOpen)}
         variant="outline"

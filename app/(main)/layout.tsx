@@ -1,6 +1,6 @@
 import Navbar from '@/components/main/navbar'
 import Footer from '@/components/main/footer'
-import { getAuth } from '@/lib/auth'
+import { getAuth } from '@/server/auth'
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const { user } = await getAuth()

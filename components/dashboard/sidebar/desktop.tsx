@@ -9,7 +9,7 @@ const SidebarDesktop = () => {
   return (
     <aside
       className={cn(
-        'w-72 hidden lg:flex flex-col bg-white border-r transition-[margin] duration-300',
+        'w-72 hidden lg:flex shrink-0 flex-col bg-white border-r transition-[margin] duration-300',
         {
           'ml-0': isOpen,
           '-ml-72': !isOpen,

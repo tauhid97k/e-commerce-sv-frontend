@@ -1,7 +1,7 @@
 import Header from '@/components/dashboard/header'
 import Sidebar from '@/components/dashboard/sidebar'
 import SidebarProvider from '@/providers/sidebar-provider'
-import { getAuth } from '@/lib/auth'
+import { getAuth } from '@/server/auth'
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { user } = await getAuth()
@@ -10,9 +10,9 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     <SidebarProvider>
       <div className="flex h-screen overflow-hidden">
         <Sidebar />
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 overflow-y-auto">
           <Header authUser={user} />
-          <main className="flex-1 p-5 overflow-y-auto">{children}</main>
+          <main className="flex-1 p-5">{children}</main>
         </div>
       </div>
     </SidebarProvider>

@@ -1,6 +1,6 @@
 import { authRoutes } from '@/auth.routes'
 import { NextRequest, NextResponse } from 'next/server'
-import { getAuth } from '@/lib/auth'
+import { getAuth } from '@/server/auth'
 
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req
