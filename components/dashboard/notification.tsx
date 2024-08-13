@@ -72,7 +72,7 @@ const Notification = () => {
         <DropdownSection>
           <DropdownHeading>
             <h4>Notifications</h4>
-            <button className="text-primary text-sm hover:underline">
+            <button className="text-primary-300 text-sm hover:underline">
               Mark all as read
             </button>
           </DropdownHeading>
@@ -83,13 +83,11 @@ const Notification = () => {
                 <Link
                   key={item.id}
                   href="#"
-                  className={cn('flex flex-col gap-0.5 p-3 hover:bg-lighter', {
-                    'text-dark/80': item.read,
-                  })}
+                  className="flex flex-col gap-0.5 p-3 hover:bg-light-100"
                 >
                   <h5
                     className={cn('text-sm', {
-                      'font-medium': !item.read,
+                      'font-medium text-dark-200': !item.read,
                     })}
                   >
                     {item.title}
@@ -112,7 +110,7 @@ const Notification = () => {
           <DropdownSeparator />
           <Link
             href="#"
-            className="text-sm tracking-wide flex justify-center p-3 hover:bg-lighter"
+            className="text-sm tracking-wide flex justify-center p-3 hover:bg-light-100"
           >
             See All Notifications
           </Link>

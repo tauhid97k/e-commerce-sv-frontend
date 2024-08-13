@@ -3,7 +3,7 @@ export type User = {
   id: number
   name: string
   email: string
-  email_verified_at: Date
-  created_at: Date
-  updated_at: Date
+  emailVerifiedAt: Date
+  createdAt: Date
+  updatedAt: Date
 }

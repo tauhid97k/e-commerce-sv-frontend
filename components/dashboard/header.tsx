@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation'
 import { handleSuccess } from '@/lib/handleResponse'
 import { toast } from 'sonner'
 
-const Header = ({ authUser }: { authUser: User }) => {
+const Header = ({ user }: { user: User }) => {
   const { isOpen, setSidebarOpen } = use(SidebarContext)
   const router = useRouter()
   const axios = useAxios()
@@ -61,7 +61,7 @@ const Header = ({ authUser }: { authUser: User }) => {
             className="flex items-center justify-between gap-x-2 rounded-full"
           >
             <span className="sr-only">Toggle user menu</span>
-            <span className="truncate max-w-[7.5rem]">{authUser.name}</span>
+            <span className="truncate max-w-[7.5rem]">{user?.name}</span>
             <Avatar>
               <AvatarImage
                 src="https://github.com/shadcn.png"

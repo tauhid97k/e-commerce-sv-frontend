@@ -8,10 +8,10 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-screen overflow-hidden bg-light-100">
         <Sidebar />
         <div className="flex flex-col flex-1 overflow-y-auto">
-          <Header authUser={user} />
+          <Header user={user} />
           <main className="flex-1 p-5">{children}</main>
         </div>
       </div>

@@ -11,7 +11,7 @@ const UsersPage = async () => {
     <>
       <div className="bg-white border rounded-md overflow-hidden">
         <div className="flex justify-between items-center flex-wrap gap-3 py-5 px-6">
-          <h2 className="text-2xl font-medium">Users</h2>
+          <h2 className="text-2xl text-dark-200">Users</h2>
           <Input
             type="search"
             name="search"

@@ -35,7 +35,7 @@ const SidebarMenuCollapsible = ({
       open={open}
       onOpenChange={setOpen}
       className={cn('border-l-2 border-transparent mb-2', {
-        'border-primary': activePath,
+        'border-primary-300': activePath,
       })}
     >
       <CollapsibleTrigger asChild>
@@ -43,8 +43,8 @@ const SidebarMenuCollapsible = ({
           className={cn(
             'flex w-full justify-between items-center gap-2 px-4 py-2.5 focus-within:outline-primary/50 transition-colors',
             {
-              'bg-light': activePath || open,
-              'hover:bg-light': !activePath,
+              'bg-light-100': activePath || open,
+              'hover:bg-light-100': !activePath,
             }
           )}
         >

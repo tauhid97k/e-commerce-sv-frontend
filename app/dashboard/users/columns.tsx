@@ -12,10 +12,10 @@ export const usersColumns: ColumnDef<User>[] = [
   },
   {
     header: 'Verified At',
-    accessorKey: 'email_verified_at',
+    accessorKey: 'emailVerifiedAt',
   },
   {
     header: 'Joining Date',
-    accessorKey: 'created_at',
+    accessorKey: 'createdAt',
   },
 ]

@@ -43,7 +43,7 @@ const DropdownTrigger = <T extends ElementType = typeof Fragment>({
   return (
     <MenuButton
       as={as}
-      className={cn('focus-within:outline-primary/50', className)}
+      className={cn('focus-within:outline-primary-200/50', className)}
       {...props}
     >
       {children}
@@ -122,7 +122,7 @@ const DropdownItem = <T extends ElementType = typeof Fragment>({
     <MenuItem
       as={as}
       className={cn(
-        'w-full flex items-center gap-x-1.5 py-2 px-3 rounded-md data-[focus]:bg-light focus:outline-none cursor-pointer',
+        'w-full flex items-center gap-x-1.5 py-2 px-3 rounded-md data-[focus]:bg-light-100 focus:outline-none cursor-pointer',
         {
           'text-red-500 data-[focus]:bg-red-50': destructive,
         },

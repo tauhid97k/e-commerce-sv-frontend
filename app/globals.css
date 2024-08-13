@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply font-poppins font-normal leading-snug text-dark bg-lighter;
+  @apply font-poppins font-normal leading-snug text-muted;
 }
 
 /* Icon */
@@ -11,18 +11,13 @@ body {
   @apply size-[22px] stroke-[1.5] leading-none;
 }
 
-/* Card */
-.card {
-  @apply p-5 rounded-lg bg-white shadow;
-}
-
 /* Heading */
 .heading {
-  @apply text-center relative border-b pb-2 mb-5;
+  @apply text-center relative border-b pb-3 mb-5;
 }
 .heading .title {
-  @apply text-xl sm:text-2xl font-medium;
+  @apply text-xl text-dark-300 sm:text-2xl font-medium mb-0.5;
 }
 .heading .description {
-  @apply text-muted font-light;
+  @apply text-muted;
 }

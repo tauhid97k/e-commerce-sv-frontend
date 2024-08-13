@@ -12,13 +12,21 @@ const config: Config = {
         poppins: ['var(--font-poppins)'],
       },
       colors: {
-        primary: '#6366f1',
-        'primary-dark': '#4f46e5',
-        muted: '#9ca3af',
-        light: '#f3f4f6',
-        lighter: '#f9fafb',
-        dark: '#374151',
-        darker: '#1f2937',
+        primary: {
+          '300': '#4078FF',
+          '200': '#5C83FF',
+          '100': '#F0F1FF',
+        },
+        dark: {
+          '300': '#202533',
+          '200': '#333845',
+          '100': '#E6E7E8',
+        },
+        light: {
+          '200': '#E9E9EB',
+          '100': '#F6F6F6',
+        },
+        muted: '#5C5F6A',
       },
       keyframes: {
         'collapsible-expand': {

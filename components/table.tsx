@@ -20,7 +20,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   // Init table
   const table = useReactTable({
-    data: data,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -34,7 +34,7 @@ export function DataTable<TData, TValue>({
               {headerGroup.headers.map((header) => {
                 return (
                   <th
-                    className="h-12 px-6 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 whitespace-nowrap bg-light border-y"
+                    className="h-12 px-6 text-left text-dark-200 align-middle font-medium [&:has([role=checkbox])]:pr-0 whitespace-nowrap bg-light-100 border-y"
                     key={header.id}
                   >
                     <div className="flex items-center gap-x-2">
@@ -58,7 +58,7 @@ export function DataTable<TData, TValue>({
               <tr key={row.id} data-state={row.getIsSelected() && 'selected'}>
                 {row.getVisibleCells().map((cell) => (
                   <td
-                    className="px-6 py-4 align-middle [&:has([role=checkbox])]:pr-0 max-w-[230px] truncate text-gray-600 border-b"
+                    className="px-6 py-4 align-middle [&:has([role=checkbox])]:pr-0 max-w-[230px] truncate border-b"
                     key={cell.id}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
