@@ -27,18 +27,14 @@ const LoginForm = () => {
   const axios = useAxios()
   const router = useRouter()
 
-  // Get CSRF Token (Must do this first otherwise 419 error will occur)
-  const csrfCookie = useMutation({
-    mutationFn: () =>
-      axios.get(`/csrf-cookie`, {
-        withCredentials: true,
-      }),
-  })
-
-  // Login Request
   const { mutate: login, isPending } = useMutation({
-    mutationFn: (formData: z.infer<typeof loginValidator>) =>
-      axios.post('/login', formData),
+    mutationFn: async (formData: z.infer<typeof loginValidator>) => {
+      // Get and Set CSRF Token
+      await axios.get(`/csrf-cookie`)
+
+      // Login
+      return axios.post('/login', formData)
+    },
   })
 
   // Form Config
@@ -53,10 +49,6 @@ const LoginForm = () => {
 
   // Login Form Handler
   const onSubmit = (values: z.infer<typeof loginValidator>) => {
-    // Set CSRF Token
-    csrfCookie.mutate()
-
-    // Login
     login(values, {
       onError: (data) => {
         const { validationErrors, error } = handleError(data)

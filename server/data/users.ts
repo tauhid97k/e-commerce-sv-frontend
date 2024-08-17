@@ -4,9 +4,9 @@ import { cookies } from 'next/headers'
 import { APP_URL, BASE_API_URL } from '@/server/config'
 
 // Get All Users (For Admin)
-export const getUsers = async () => {
+export const getUsers = async (queries: string) => {
   try {
-    const response = await fetch(`${BASE_API_URL}/api/users`, {
+    const response = await fetch(`${BASE_API_URL}/api/users?${queries}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',

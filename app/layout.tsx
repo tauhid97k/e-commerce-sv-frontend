@@ -47,7 +47,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable}`}>
         <QueryProvider>
-          <NextTopLoader height={2} color="#4078FF" showSpinner={false} />
+          <NextTopLoader height={2} color="#4078FF" />
           <Toaster />
           {children}
         </QueryProvider>

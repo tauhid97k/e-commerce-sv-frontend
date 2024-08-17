@@ -1,11 +1,14 @@
 import { DataTable } from '@/components/table'
 import { usersColumns } from './columns'
 import { getUsers } from '@/server/data/users'
-import { User } from '@/lib/dataTypes'
 import { Input } from '@/components/input'
 
-const UsersPage = async () => {
-  const users: User[] = await getUsers()
+const UsersPage = async ({ searchParams }: { searchParams: any }) => {
+  const page = searchParams.page ?? 1
+  const limit = searchParams.limit ?? 15
+
+  const queries = `page=${page}&limit=${limit}`
+  const users = await getUsers(queries)
 
   return (
     <>
