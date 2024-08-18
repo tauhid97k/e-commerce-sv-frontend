@@ -116,7 +116,7 @@ export function DataTable<TData, TValue>({
           link.url ? (
             <Link
               className={`h-10 min-w-10 flex items-center justify-center rounded p-3 ${
-                link.active ? 'bg-primary-200 text-white' : 'hover:bg-light-100'
+                link.active ? 'bg-primary-200 text-white' : 'hover:bg-light-200'
               }`}
               key={link.label}
               href={handlePagination(link.url)}

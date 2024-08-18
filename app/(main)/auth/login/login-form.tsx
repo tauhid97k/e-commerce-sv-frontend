@@ -120,7 +120,7 @@ const LoginForm = () => {
               )}
             />
             <Link
-              href="/forgot-password"
+              href="/auth/forgot-password"
               className="block text-center text-sm hover:underline focus:underline focus:outline-none whitespace-nowrap"
             >
               Forgot password?

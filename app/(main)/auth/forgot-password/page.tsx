@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
       </div>
       <ForgotPasswordForm />
       <Link
-        href="/login"
+        href="/auth/login"
         className="block text-center hover:underline focus:underline focus:outline-none"
       >
         Go back to login?

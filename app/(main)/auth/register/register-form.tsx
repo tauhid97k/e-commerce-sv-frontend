@@ -23,7 +23,7 @@ const RegisterForm = () => {
 
   const { mutate: register, isPending } = useMutation({
     mutationFn: (formData: z.infer<typeof registerValidator>) =>
-      axios.post('/login', formData),
+      axios.post('/register', formData),
   })
 
   const form = useForm<z.infer<typeof registerValidator>>({

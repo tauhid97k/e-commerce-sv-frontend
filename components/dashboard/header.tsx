@@ -37,7 +37,7 @@ const Header = ({ user }: { user: User }) => {
       onSuccess: (data) => {
         const { message } = handleSuccess(data)
         toast.success(message)
-        router.replace('/login')
+        router.replace('/auth/login')
       },
     })
   }

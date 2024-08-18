@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { authRoutes } from '@/auth.routes'
 import { getAuth } from '@/server/auth'
 
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req
 
   const isDashboardRoute = nextUrl.pathname.startsWith('/dashboard')
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname)
+  const isAuthRoute = nextUrl.pathname.startsWith('/auth')
 
   if (isDashboardRoute || isAuthRoute) {
     const { isAuthenticated } = await getAuth()
@@ -14,7 +13,7 @@ export default async function middleware(req: NextRequest) {
     if (isDashboardRoute) {
       return isAuthenticated
         ? NextResponse.next()
-        : NextResponse.redirect(new URL('/login', nextUrl))
+        : NextResponse.redirect(new URL('/auth/login', nextUrl))
     }
 
     if (isAuthRoute) {
