@@ -6,6 +6,7 @@ import { PaginatedData, User } from '@/lib/dataTypes'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
+import { useDebounceCallback } from 'usehooks-ts'
 
 const UsersTable = ({
   users,
@@ -45,22 +46,25 @@ const UsersTable = ({
     },
   ]
 
-  // Handle Search
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = event.target.value
+  // Handle Search (Debounced)
+  const handleSearch = useDebounceCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const searchValue = event.target.value
 
-    if (searchValue) {
-      searchParams.set('search', searchValue)
-      searchParams.set('page', '1')
-    } else {
-      searchParams.delete('search')
-      searchParams.delete('page')
-    }
+      if (searchValue) {
+        searchParams.set('search', searchValue)
+        searchParams.set('page', '1')
+      } else {
+        searchParams.delete('search')
+        searchParams.delete('page')
+      }
 
-    startTransition(() => {
-      router.push(`?${searchParams}`)
-    })
-  }
+      startTransition(() => {
+        router.push(`?${searchParams}`)
+      })
+    },
+    300
+  )
 
   return (
     <div className="bg-white border rounded-md overflow-hidden">
