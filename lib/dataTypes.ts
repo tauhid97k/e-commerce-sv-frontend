@@ -1,3 +1,24 @@
+// Pagination Link Interface
+interface PaginationLink {
+  url: string | null
+  label: string
+  active: boolean
+}
+
+// Meta Data Interface
+interface Meta {
+  links: PaginationLink[]
+  current_page: number
+  last_page: number
+  total: number
+}
+
+// Paginated Data and Meta Type
+export type PaginatedData<TData> = {
+  data: TData[] // Actual data array
+  meta: Meta // Meta information including pagination links
+}
+
 // User
 export type User = {
   id: number
@@ -6,6 +27,7 @@ export type User = {
   emailVerifiedAt: Date
   role: string
   permissions: string[]
+  status: string
   createdAt: Date
   updatedAt: Date
 }

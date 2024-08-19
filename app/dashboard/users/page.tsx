@@ -1,31 +1,21 @@
-import { DataTable } from '@/components/table'
-import { usersColumns } from './columns'
 import { getUsers } from '@/server/data/users'
-import { Input } from '@/components/input'
+import UsersTable from './table'
 
-const UsersPage = async ({ searchParams }: { searchParams: any }) => {
-  const page = searchParams.page ?? 1
-  const limit = searchParams.limit ?? 15
+const UsersPage = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    page?: string
+    search?: string
+  }
+}) => {
+  const page = searchParams?.page || 1
+  const search = searchParams?.search || ''
 
-  const queries = `page=${page}&limit=${limit}`
+  const queries = `page=${page}&search=${search}`
   const users = await getUsers(queries)
 
-  return (
-    <>
-      <div className="bg-white border rounded-md overflow-hidden">
-        <div className="flex justify-between items-center flex-wrap gap-3 py-5 px-6">
-          <h2 className="text-2xl text-dark-200">Users</h2>
-          <Input
-            type="search"
-            name="search"
-            placeholder="Search..."
-            className="w-full sm:w-72"
-          />
-        </div>
-        <DataTable data={users} columns={usersColumns} />
-      </div>
-    </>
-  )
+  return <UsersTable users={users} queries={queries} />
 }
 
 export default UsersPage

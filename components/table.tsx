@@ -6,43 +6,23 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { PaginatedData } from '@/lib/dataTypes'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
-// Pagination Link Interface
-interface PaginationLink {
-  url: string | null
-  label: string
-  active: boolean
-}
-
-// Data Meta Information Interface
-interface Meta {
-  links: PaginationLink[]
-  current_page: number
-  last_page: number
-  total: number
-}
-
-// Paginated Data and Meta Interface
-interface PaginatedData<TData> {
-  data: TData[] // Actual data array
-  meta: Meta // Meta information including pagination links
-}
-
-// DataTable Props Interface
+// Table Props Interface
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: PaginatedData<TData>
 }
 
-export function DataTable<TData, TValue>({
+export const DataTable = <TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>) => {
   const searchParams = useSearchParams()
 
-  // Init table with correctly inferred types
+  // Init table
   const table = useReactTable({
     data: data.data,
     columns,
@@ -52,10 +32,10 @@ export function DataTable<TData, TValue>({
   // Handle Pagination
   const handlePagination = (url: string) => {
     const page = new URL(url).searchParams.get('page') ?? '1'
-    const currentParams = new URLSearchParams(searchParams.toString())
+    const currentParams = new URLSearchParams(searchParams)
 
     currentParams.set('page', page)
-    return `?${currentParams.toString()}`
+    return `?${currentParams}`
   }
 
   return (
