@@ -1,24 +1,21 @@
 'use client'
 
+import { Button } from '@/components/button'
+import { Plus } from 'lucide-react'
 import { Input } from '@/components/input'
 import { DataTable } from '@/components/table'
 import { PaginatedData, User } from '@/lib/dataTypes'
 import { ColumnDef } from '@tanstack/react-table'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebounceCallback } from 'usehooks-ts'
+import { CheckSelector } from '@/components/filters/check-selector'
 
-const UsersTable = ({
-  users,
-  queries,
-}: {
-  users: PaginatedData<User>
-  queries: string
-}) => {
-  const [isPending, startTransition] = useTransition()
-  const searchParams = new URLSearchParams(queries)
+const UsersTable = ({ users }: { users: PaginatedData<User> }) => {
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams)
   const router = useRouter()
 
+  // Users Table Columns
   const columns: ColumnDef<User>[] = [
     {
       header: 'Name',
@@ -46,38 +43,61 @@ const UsersTable = ({
     },
   ]
 
+  // Status Filters
+  const statusFilterOptions = [
+    {
+      label: 'Active',
+      value: 'active',
+    },
+    {
+      label: 'Inactive',
+      value: 'inactive',
+    },
+    {
+      label: 'Suspended',
+      value: 'suspended',
+    },
+  ]
+
   // Handle Search (Debounced)
   const handleSearch = useDebounceCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const searchValue = event.target.value
 
       if (searchValue) {
-        searchParams.set('search', searchValue)
-        searchParams.set('page', '1')
+        params.set('search', searchValue)
+        params.set('page', '1')
       } else {
-        searchParams.delete('search')
-        searchParams.delete('page')
+        params.delete('search')
+        params.delete('page')
       }
 
-      startTransition(() => {
-        router.push(`?${searchParams}`)
-      })
+      router.push(`?${params}`)
     },
     300
   )
 
   return (
     <div className="bg-white border rounded-md overflow-hidden">
-      <div className="flex justify-between items-center flex-wrap gap-3 py-5 px-6">
-        <h2 className="text-2xl text-dark-200">Users</h2>
-        <Input
-          type="search"
-          name="search"
-          defaultValue={searchParams.get('search')?.toString()}
-          onChange={handleSearch}
-          placeholder="Search name or email..."
-          className="w-full sm:w-72"
-        />
+      <div className="py-6 px-6">
+        <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
+          <h2 className="text-3xl text-dark-200">Users</h2>
+          <Button>
+            <Plus className="icon" />
+            <span>Add User</span>
+          </Button>
+        </div>
+        <div className="flex items-center flex-wrap gap-3">
+          <Input
+            type="search"
+            name="search"
+            defaultValue={params.get('search')?.toString()}
+            onChange={handleSearch}
+            placeholder="Search name or email..."
+            className="sm:w-72"
+          />
+          <CheckSelector filter="status" options={statusFilterOptions} />
+        </div>
       </div>
       <DataTable data={users} columns={columns} />
     </div>

@@ -7,15 +7,17 @@ const UsersPage = async ({
   searchParams?: {
     page?: string
     search?: string
+    status?: string
   }
 }) => {
   const page = searchParams?.page || 1
   const search = searchParams?.search || ''
+  const status = searchParams?.status || ''
 
-  const queries = `page=${page}&search=${search}`
+  const queries = `page=${page}&search=${search}&status=${status}`
   const users = await getUsers(queries)
 
-  return <UsersTable users={users} queries={queries} />
+  return <UsersTable users={users} />
 }
 
 export default UsersPage

@@ -7,7 +7,7 @@ import { LoaderCircle } from 'lucide-react'
 
 // Variants
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary/50 disabled:opacity-70 disabled:pointer-events-none',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md shadow-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary/50 disabled:opacity-70 disabled:pointer-events-none',
   {
     variants: {
       variant: {
@@ -18,7 +18,7 @@ const buttonVariants = cva(
         outline: 'border hover:bg-light-100',
       },
       size: {
-        default: 'py-2 px-4 text-base',
+        default: 'h-[42px] px-4 text-base',
         sm: 'py-2 px-3 text-xs',
         icon: 'size-10',
       },
@@ -92,4 +92,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = 'Button'
 
-export { Button }
+export { buttonVariants, Button }
