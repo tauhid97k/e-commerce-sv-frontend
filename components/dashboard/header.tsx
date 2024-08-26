@@ -16,7 +16,7 @@ import { User } from '@/lib/dataTypes'
 import { FormEvent, use } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAxios } from '@/lib/axios'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 import { handleSuccess } from '@/lib/handleResponse'
 import { toast } from 'sonner'
 

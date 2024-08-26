@@ -19,7 +19,7 @@ import { loginValidator } from '@/validators/authValidator'
 import { Checkbox } from '@/components/checkbox'
 import { useAxios } from '@/lib/axios'
 import { useMutation } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 import { handleError, handleSuccess } from '@/lib/handleResponse'
 import { toast } from 'sonner'
 

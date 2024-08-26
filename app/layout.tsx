@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 
-import NextTopLoader from 'nextjs-toploader'
+import ProgressbarProvider from '@/providers/progressbar-provider'
 import QueryProvider from '@/providers/query-provider'
 import Toaster from '@/components/toaster'
 
@@ -46,11 +46,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
-        <QueryProvider>
-          <NextTopLoader height={2} color="#4078FF" />
-          <Toaster />
-          {children}
-        </QueryProvider>
+        <ProgressbarProvider>
+          <QueryProvider>
+            {children}
+            <Toaster />
+          </QueryProvider>
+        </ProgressbarProvider>
       </body>
     </html>
   )

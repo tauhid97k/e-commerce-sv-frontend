@@ -1,7 +1,9 @@
 import { Checkbox } from '@/components/checkbox'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next-nprogress-bar'
 import { CirclePlus } from 'lucide-react'
+import { useState } from 'react'
 
 export const CheckSelector = ({
   filter,
@@ -15,9 +17,11 @@ export const CheckSelector = ({
   const router = useRouter()
 
   // Init
-  const selectedValues = params.get(filter)
-    ? new Set<string>(params.get(filter)?.split(','))
-    : new Set<string>()
+  const [selectedValues, setSelectedValues] = useState(() =>
+    params.get(filter)
+      ? new Set<string>(params.get(filter)?.split(','))
+      : new Set<string>()
+  )
 
   // Handle Checkbox Change
   const handleCheckedFilters = (value: string) => {
@@ -28,6 +32,9 @@ export const CheckSelector = ({
       newSelectedValues.add(value)
     }
 
+    // Update selected checkbox
+    setSelectedValues(newSelectedValues)
+
     // Construct new url params
     if (newSelectedValues.size > 0) {
       params.set('page', '1')
@@ -37,11 +44,16 @@ export const CheckSelector = ({
       params.delete(filter)
     }
 
+    // Update url params
     router.push(`?${params}`)
   }
 
   // Clear Filters
   const handleClearFilters = () => {
+    // Clear the selected values
+    setSelectedValues(new Set<string>())
+
+    // Update url params
     params.delete(filter)
     params.delete('page')
     router.push(`?${params}`)
