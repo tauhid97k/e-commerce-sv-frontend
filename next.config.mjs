@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/backend/:path*',
-        destination: 'http://laravel-11-starter.test/:path*',
+        destination: 'http://e-commerce-sv-backend.test/:path*',
       },
     ]
   },

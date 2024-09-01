@@ -1,11 +1,8 @@
 import axios, { AxiosInstance } from 'axios'
 import { useRouter } from 'next/navigation'
 
-export const useAxios = (apiVersion?: string): AxiosInstance => {
+export const useAxios = (): AxiosInstance => {
   const router = useRouter()
-
-  // Construct Url
-  const url = apiVersion ? `/backend/api/${apiVersion}` : `/backend/api`
 
   // Create a singleton instance
   let instance: AxiosInstance | null = null
@@ -14,7 +11,7 @@ export const useAxios = (apiVersion?: string): AxiosInstance => {
   if (!instance) {
     instance = axios.create({
       withCredentials: true,
-      baseURL: url,
+      baseURL: '/backend/api',
     })
 
     // Response interceptor
@@ -26,8 +23,16 @@ export const useAxios = (apiVersion?: string): AxiosInstance => {
         if (response) {
           const { status } = response
 
+          if (status === 401) {
+            router.replace('/auth/login')
+          }
+
           if (status === 403) {
             router.push('/unauthorized')
+          }
+
+          if (status === 500) {
+            router.push('/internal-server-error')
           }
         }
 

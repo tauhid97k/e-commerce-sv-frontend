@@ -1,7 +1,13 @@
 import SidebarMenuItem from './menu-item'
 import SidebarMenuCollapsible from './menu-collapsible'
 import MenuCollapsibleItem from './menu-collapsible-item'
-import { LayoutGrid, Settings, ShieldCheck, UsersRound } from 'lucide-react'
+import {
+  LayoutGrid,
+  Package,
+  Settings,
+  ShieldCheck,
+  UsersRound,
+} from 'lucide-react'
 
 const SidebarMenu = () => {
   return (
@@ -12,15 +18,27 @@ const SidebarMenu = () => {
         icon={<LayoutGrid className="icon" />}
       />
       <SidebarMenuCollapsible
+        text="Products"
+        basePath="/dashboard/products"
+        icon={<Package className="icon" />}
+      >
+        <MenuCollapsibleItem text="All Products" href="/dashboard/products" />
+        <MenuCollapsibleItem
+          text="Add Product"
+          href="/dashboard/products/add"
+        />
+        <MenuCollapsibleItem
+          text="Inventory"
+          href="/dashboard/products/inventory"
+        />
+      </SidebarMenuCollapsible>
+      <SidebarMenuCollapsible
         text="Users"
         basePath="/dashboard/users"
         icon={<UsersRound className="icon" />}
       >
         <MenuCollapsibleItem text="All Users" href="/dashboard/users" />
-        <MenuCollapsibleItem
-          text="Create User"
-          href="/dashboard/users/create"
-        />
+        <MenuCollapsibleItem text="Add User" href="/dashboard/users/add" />
       </SidebarMenuCollapsible>
       <SidebarMenuItem
         text="Role Permissions"

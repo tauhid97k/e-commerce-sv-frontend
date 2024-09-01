@@ -7,25 +7,23 @@ export default async function middleware(req: NextRequest) {
   const isDashboardRoute = nextUrl.pathname.startsWith('/dashboard')
   const isAuthRoute = nextUrl.pathname.startsWith('/auth')
 
-  if (isDashboardRoute || isAuthRoute) {
-    const { isAuthenticated } = await getAuth()
+  const { isAuthenticated } = await getAuth()
 
-    if (isDashboardRoute) {
-      return isAuthenticated
-        ? NextResponse.next()
-        : NextResponse.redirect(new URL('/auth/login', nextUrl))
-    }
+  if (isDashboardRoute) {
+    return isAuthenticated
+      ? NextResponse.next()
+      : NextResponse.redirect(new URL('/auth/login', nextUrl))
+  }
 
-    if (isAuthRoute) {
-      return isAuthenticated
-        ? NextResponse.redirect(new URL('/dashboard', nextUrl))
-        : NextResponse.next()
-    }
+  if (isAuthRoute) {
+    return isAuthenticated
+      ? NextResponse.redirect(new URL('/dashboard', nextUrl))
+      : NextResponse.next()
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/(api)(.*)'],
+  matcher: ['/dashboard/:path*', '/auth/:path*'],
 }

@@ -1,14 +1,14 @@
-import { z } from "zod"
+import * as z from 'zod'
 
 // Register Validator
 export const registerValidator = z
   .object({
-    name: z.string().min(1, { message: "Name is required" }),
+    name: z.string().min(1, { message: 'Name is required' }),
     email: z
       .string()
-      .min(1, { message: "Email is required" })
-      .email({ message: "Invalid email" }),
-    password: z.string().min(1, { message: "Password is required" }),
+      .min(1, { message: 'Email is required' })
+      .email({ message: 'Invalid email' }),
+    password: z.string().min(1, { message: 'Password is required' }),
     password_confirmation: z.string(),
   })
   .refine(
@@ -16,8 +16,8 @@ export const registerValidator = z
       return values.password === values.password_confirmation
     },
     {
-      message: "Passwords must match",
-      path: ["password_confirmation"],
+      message: 'Passwords must match',
+      path: ['password_confirmation'],
     }
   )
 
@@ -25,9 +25,9 @@ export const registerValidator = z
 export const loginValidator = z.object({
   email: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Invalid email" }),
-  password: z.string().min(1, { message: "Password is required" }),
+    .min(1, { message: 'Email is required' })
+    .email({ message: 'Invalid email' }),
+  password: z.string().min(1, { message: 'Password is required' }),
   remember_me: z.boolean().optional(),
 })
 
@@ -35,6 +35,6 @@ export const loginValidator = z.object({
 export const forgotPasswordValidator = z.object({
   email: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Invalid email" }),
+    .min(1, { message: 'Email is required' })
+    .email({ message: 'Invalid email' }),
 })

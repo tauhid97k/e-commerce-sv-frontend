@@ -1,4 +1,4 @@
-import { Fragment, ElementType, ComponentPropsWithRef } from 'react'
+import * as React from 'react'
 import {
   Menu,
   MenuProps,
@@ -25,17 +25,15 @@ const Dropdown = ({ children, ...props }: DropdownProps) => {
 }
 
 // Dropdown Trigger
-type DropdownTriggerProps<T extends ElementType = typeof Fragment> = Omit<
-  MenuButtonProps,
-  'as'
-> & {
-  as?: T
-  children: React.ReactNode
-  className?: string
-} & ComponentPropsWithRef<T>
+type DropdownTriggerProps<T extends React.ElementType = typeof React.Fragment> =
+  Omit<MenuButtonProps, 'as'> & {
+    as?: T
+    children: React.ReactNode
+    className?: string
+  } & React.ComponentPropsWithRef<T>
 
-const DropdownTrigger = <T extends ElementType = typeof Fragment>({
-  as = Fragment,
+const DropdownTrigger = <T extends React.ElementType = typeof React.Fragment>({
+  as = React.Fragment,
   children,
   className,
   ...props
@@ -101,19 +99,17 @@ const DropdownSeparator = ({ ...props }: MenuSeparatorProps) => (
 )
 
 // Dropdown Item
-type DropdownItemProps<T extends ElementType = typeof Fragment> = Omit<
-  MenuItemProps,
-  'as'
-> & {
-  as?: T
-  destructive?: boolean
-  children: React.ReactNode
-  className?: string
-} & ComponentPropsWithRef<T>
+type DropdownItemProps<T extends React.ElementType = typeof React.Fragment> =
+  Omit<MenuItemProps, 'as'> & {
+    as?: T
+    destructive?: boolean
+    children: React.ReactNode
+    className?: string
+  } & React.ComponentPropsWithRef<T>
 
-const DropdownItem = <T extends ElementType = typeof Fragment>({
+const DropdownItem = <T extends React.ElementType = typeof React.Fragment>({
   children,
-  as = Fragment,
+  as = React.Fragment,
   destructive,
   className,
   ...props

@@ -64,7 +64,7 @@ const Header = ({ user }: { user: User }) => {
             <span className="truncate max-w-[7.5rem]">{user?.name}</span>
             <Avatar>
               <AvatarImage
-                src="https://github.com/shadcn.png"
+                src={`https://avatar.iran.liara.run/username?username=${user?.name}`}
                 alt="profile image"
               />
               <AvatarFallback>
