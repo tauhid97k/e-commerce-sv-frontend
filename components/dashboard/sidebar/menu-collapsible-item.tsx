@@ -15,6 +15,7 @@ const MenuCollapsibleItem = ({
   return (
     <Link
       href={href}
+      prefetch={false}
       className={cn(
         "relative flex gap-2 items-center tracking-wide focus-visible:outline-none first:pt-4 py-1.5 before:content-[''] before:h-px before:w-[1.6rem] before:bg-gray-200 before:transition-colors transition-colors",
         {

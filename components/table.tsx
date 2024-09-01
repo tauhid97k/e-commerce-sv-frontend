@@ -95,13 +95,14 @@ export const DataTable = <TData, TValue>({
         {data?.meta?.links.map((link) =>
           link.url ? (
             <Link
+              key={link.label}
+              href={handlePagination(link.url)}
+              prefetch={false}
+              scroll={false}
+              dangerouslySetInnerHTML={{ __html: link.label }}
               className={`h-10 min-w-10 flex items-center justify-center rounded p-3 ${
                 link.active ? 'bg-primary-200 text-white' : 'hover:bg-light-200'
               }`}
-              key={link.label}
-              href={handlePagination(link.url)}
-              scroll={false}
-              dangerouslySetInnerHTML={{ __html: link.label }}
             />
           ) : (
             <span
