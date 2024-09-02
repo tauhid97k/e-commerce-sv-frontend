@@ -1,5 +1,7 @@
+import AddProductForm from './add-product-form'
+
 const AddProductPage = () => {
-  return <div>Add New Product</div>
+  return <AddProductForm />
 }
 
 export default AddProductPage

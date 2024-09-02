@@ -21,3 +21,37 @@ body {
 .heading .description {
   @apply text-muted;
 }
+
+/* Cards */
+.card {
+  @apply space-y-2;
+}
+.card-body {
+  @apply border p-4 rounded-md;
+}
+.card-title {
+  @apply text-dark-300 font-medium;
+}
+
+/* TipTap Rich Text Editor Styles */
+.tiptap h1 {
+  @apply text-2xl text-dark-300;
+}
+.tiptap h2 {
+  @apply text-xl text-dark-300;
+}
+
+.tiptap ul li {
+  @apply list-disc ml-[1.15rem];
+}
+.tiptap ol li {
+  @apply list-decimal ml-[1.15rem];
+}
+
+.tiptap code {
+  @apply text-dark-200 text-sm bg-light-200 px-1 py-0.5 rounded;
+}
+
+.tiptap mark {
+  @apply bg-yellow-200 text-dark-200 px-1 py-0.5 rounded;
+}

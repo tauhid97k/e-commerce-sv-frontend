@@ -80,7 +80,7 @@ const UsersTable = ({ users }: { users: PaginatedData<User> }) => {
 
   return (
     <div className="bg-white border rounded-md overflow-hidden">
-      <div className="py-6 px-6">
+      <div className="p-6">
         <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
           <h2 className="text-3xl text-dark-200">Users</h2>
           <Button>
