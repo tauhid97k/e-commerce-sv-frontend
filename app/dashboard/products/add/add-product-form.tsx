@@ -14,78 +14,114 @@ import {
 } from '@/components/form'
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
-import TipTapEditor from '@/components/tiptap-editor'
+import { TipTapEditor } from '@/components/tiptap-editor'
+import { FileUploader } from '@/components/file-uploader'
+import { productValidator } from '@/validators/productValidator'
 
 const AddProductForm = () => {
-  const form = useForm({
+  const form = useForm<z.infer<typeof productValidator>>({
+    resolver: zodResolver(productValidator),
     defaultValues: {
       name: '',
       slug: '',
       description: '',
+      images: [],
     },
   })
 
+  // Handle Files
+  const handleFilesChange = (files: File[]) => {
+    form.setValue('images', files)
+  }
+
+  // Submit form
   const onSubmit = (values: any) => {
-    // Submit form
+    // Code
   }
 
   return (
     <div className="bg-white border rounded-md p-6 overflow-hidden">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
           <FormFieldset
             disabled={form.formState.isSubmitting}
-            className="grid-cols-4"
+            className="grid-cols-1 lg:grid-cols-4"
           >
-            <div className="card col-span-2">
-              <div className="card-body space-y-2.5">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Product Name</FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Product Slug</FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} disabled />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <TipTapEditor
-                          content={field.value}
-                          onChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <div className="lg:col-span-2 space-y-4">
+              <div className="card">
+                <div className="card-body">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Product Name</FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Product Slug</FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <TipTapEditor
+                            content={field.value as string}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-2 space-y-4">
+              <div className="card">
+                <div className="card-body">
+                  <FormField
+                    control={form.control}
+                    name="images"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Product Images</FormLabel>
+                        <FormControl>
+                          <FileUploader
+                            maxFiles={6}
+                            onFilesChange={handleFilesChange}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
             </div>
           </FormFieldset>
           <div className="flex justify-end">
-            <Button isLoading={form.formState.isSubmitting}>Add Product</Button>
+            <Button type="submit" isLoading={form.formState.isSubmitting}>
+              Add Product
+            </Button>
           </div>
         </form>
       </Form>

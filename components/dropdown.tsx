@@ -84,7 +84,7 @@ const DropdownItems = ({ children, className }: DropdownItemsProps) => {
       transition
       anchor="bottom end"
       className={cn(
-        'w-44 origin-top-right transition ease-out data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-300 [--anchor-padding:16px] bg-white shadow-lg rounded-md mt-2 ring-1 ring-gray-200 focus:outline-none',
+        'w-44 z-50 origin-top-right transition ease-out data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-300 [--anchor-padding:16px] bg-white shadow-lg rounded-md mt-2 ring-1 ring-gray-200 focus:outline-none',
         className
       )}
     >

@@ -43,7 +43,7 @@ const Header = ({ user }: { user: User }) => {
   }
 
   return (
-    <header className="h-16 shrink-0 sticky top-0 flex justify-between items-center bg-white px-5 border-b">
+    <header className="h-16 shrink-0 sticky top-0 flex justify-between items-center bg-white px-5 border-b z-40">
       <Button
         onClick={() => setSidebarOpen(() => !isOpen)}
         variant="outline"

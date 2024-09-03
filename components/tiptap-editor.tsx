@@ -33,7 +33,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('bold')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -44,7 +44,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('italic')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -55,7 +55,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('heading', { level: 1 })
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -66,7 +66,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('heading', { level: 2 })
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -77,7 +77,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleSubscript().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('subscript')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -88,7 +88,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleSuperscript().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('superscript')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -99,7 +99,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleHighlight().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('highlight')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -110,7 +110,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('bulletList')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -121,7 +121,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('orderedList')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -132,7 +132,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('strike')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -143,7 +143,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().toggleCode().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('code')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -154,7 +154,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().undo().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('undo')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -165,7 +165,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
       <button
         onClick={() => editor.chain().focus().redo().run()}
         className={cn(
-          'p-2 rounded',
+          'p-2 rounded focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-200/50',
           editor.isActive('undo')
             ? 'bg-light-200 text-dark-300'
             : 'hover:bg-light-100'
@@ -178,7 +178,7 @@ const Toolbar = ({ editor }: { editor: Editor | null }) => {
 }
 
 // Editor
-const TipTapEditor = ({
+export const TipTapEditor = ({
   content,
   onChange,
 }: {
@@ -200,7 +200,7 @@ const TipTapEditor = ({
   })
 
   return (
-    <div className="rounded-md border shadow-sm">
+    <div className="rounded-md border shadow-sm focus-within:border-primary-200/50 focus-within:ring-1 focus-within:ring-primary-200/50">
       <Toolbar editor={editor} />
       <div className="max-h-[244px] p-3 overflow-y-auto">
         <EditorContent editor={editor} />
@@ -208,5 +208,3 @@ const TipTapEditor = ({
     </div>
   )
 }
-
-export default TipTapEditor

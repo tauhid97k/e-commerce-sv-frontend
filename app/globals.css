@@ -27,10 +27,10 @@ body {
   @apply space-y-2;
 }
 .card-body {
-  @apply border p-4 rounded-md;
+  @apply border p-4 space-y-2.5 rounded-md;
 }
 .card-title {
-  @apply text-dark-300 font-medium;
+  @apply text-dark-300;
 }
 
 /* TipTap Rich Text Editor Styles */
