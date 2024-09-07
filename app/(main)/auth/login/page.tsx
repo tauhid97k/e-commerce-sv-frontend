@@ -3,7 +3,7 @@ import LoginForm from './login-form'
 
 const LoginPage = () => {
   return (
-    <div className="card">
+    <>
       <div className="heading">
         <h1 className="title">Account Login</h1>
         <p className="description">Enter your account information</p>
@@ -18,7 +18,7 @@ const LoginPage = () => {
           Register
         </Link>
       </div>
-    </div>
+    </>
   )
 }
 

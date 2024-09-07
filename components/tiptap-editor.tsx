@@ -200,7 +200,7 @@ export const TipTapEditor = ({
   })
 
   return (
-    <div className="rounded-md border shadow-sm focus-within:border-primary-200/50 focus-within:ring-1 focus-within:ring-primary-200/50">
+    <div className="rounded-md border focus-within:border-primary-200/50 focus-within:ring-1 focus-within:ring-primary-200/50">
       <Toolbar editor={editor} />
       <div className="max-h-[244px] p-3 overflow-y-auto">
         <EditorContent editor={editor} />

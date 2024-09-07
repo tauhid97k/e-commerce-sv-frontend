@@ -17,6 +17,7 @@ import { Button } from '@/components/button'
 import { TipTapEditor } from '@/components/tiptap-editor'
 import { FileUploader } from '@/components/file-uploader'
 import { productValidator } from '@/validators/productValidator'
+import { Plus } from 'lucide-react'
 
 const AddProductForm = () => {
   const form = useForm<z.infer<typeof productValidator>>({
@@ -29,103 +30,136 @@ const AddProductForm = () => {
     },
   })
 
-  // Handle Files
-  const handleFilesChange = (files: File[]) => {
-    form.setValue('images', files)
-  }
-
   // Submit form
   const onSubmit = (values: any) => {
     // Code
+    console.log(values)
   }
 
   return (
-    <div className="bg-white border rounded-md p-6 overflow-hidden">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
-          <FormFieldset
-            disabled={form.formState.isSubmitting}
-            className="grid-cols-1 lg:grid-cols-4"
-          >
-            <div className="lg:col-span-2 space-y-4">
-              <div className="card">
-                <div className="card-body">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Product Name</FormLabel>
-                        <FormControl>
-                          <Input type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="slug"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Product Slug</FormLabel>
-                        <FormControl>
-                          <Input type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <TipTapEditor
-                            content={field.value as string}
-                            onChange={field.onChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
+        <FormFieldset
+          disabled={form.formState.isSubmitting}
+          className="grid-cols-1 lg:grid-cols-4 gap-5"
+        >
+          <div className="lg:col-span-2 space-y-4">
+            {/* Product Details */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">General Information</h5>
+              </div>
+              <div className="card-body">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel isRequired>Product Name</FormLabel>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel isRequired>Product Slug</FormLabel>
+                      <FormControl>
+                        <Input type="text" {...field} disabled />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel isRequired>Description</FormLabel>
+                      <FormControl>
+                        <TipTapEditor
+                          content={field.value as string}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
-            <div className="lg:col-span-2 space-y-4">
-              <div className="card">
-                <div className="card-body">
-                  <FormField
-                    control={form.control}
-                    name="images"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Product Images</FormLabel>
-                        <FormControl>
-                          <FileUploader
-                            maxFiles={6}
-                            onFilesChange={handleFilesChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+
+            {/* Product Variant */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">Variants</h5>
+                <button className="card-btn">
+                  <Plus className="icon" />
+                  <span>Add Variant</span>
+                </button>
               </div>
+              <div className="card-body"></div>
             </div>
-          </FormFieldset>
-          <div className="flex justify-end">
-            <Button type="submit" isLoading={form.formState.isSubmitting}>
-              Add Product
-            </Button>
           </div>
-        </form>
-      </Form>
-    </div>
+          <div className="lg:col-span-2 space-y-4">
+            {/* Product Images */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">Product Images</h5>
+              </div>
+              <div className="card-body">
+                <FormField
+                  control={form.control}
+                  name="images"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUploader
+                          maxFiles={6}
+                          onFilesChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Product Brand */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">Brand</h5>
+              </div>
+              <div className="card-body"></div>
+            </div>
+
+            {/* Product Category */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">Category</h5>
+              </div>
+              <div className="card-body"></div>
+            </div>
+          </div>
+        </FormFieldset>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            value="publish"
+            isLoading={form.formState.isSubmitting}
+          >
+            Add Product
+          </Button>
+        </div>
+      </form>
+    </Form>
   )
 }
 

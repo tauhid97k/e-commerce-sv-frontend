@@ -24,13 +24,19 @@ body {
 
 /* Cards */
 .card {
-  @apply space-y-2;
+  @apply border rounded-md bg-white;
 }
-.card-body {
-  @apply border p-4 space-y-2.5 rounded-md;
+.card-header {
+  @apply flex justify-between items-center gap-2 p-4 border-b;
 }
 .card-title {
-  @apply text-dark-300;
+  @apply text-dark-300 font-medium;
+}
+.card-btn {
+  @apply flex items-center gap-0.5 text-primary-300;
+}
+.card-body {
+  @apply flex flex-col gap-3 p-4;
 }
 
 /* TipTap Rich Text Editor Styles */

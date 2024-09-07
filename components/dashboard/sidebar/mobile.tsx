@@ -21,7 +21,7 @@ const SidebarMobile = () => {
         <SheetHeader>
           <SheetTitle className="text-xl font-medium">Brand Logo</SheetTitle>
           <SheetClose asChild>
-            <Button variant="outline" size="icon" className="p-4">
+            <Button variant="outline" size="icon">
               <X className="icon" />
               <span className="sr-only">Close</span>
             </Button>

@@ -7,8 +7,10 @@ import { cn } from '@/lib/utils'
 
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & {
+    isRequired?: boolean
+  }
+>(({ className, isRequired = false, children, ...props }, ref) => (
   <LabelPrimitive.Root
     ref={ref}
     className={cn(
@@ -16,7 +18,12 @@ const Label = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    <div className="flex">
+      {children}
+      {isRequired && <sup className="text-muted mt-3">&#42;</sup>}
+    </div>
+  </LabelPrimitive.Root>
 ))
 Label.displayName = LabelPrimitive.Root.displayName
 
