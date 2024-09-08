@@ -64,7 +64,7 @@ export const FileUploader = ({
         <div
           {...getRootProps({
             className:
-              'shrink-0 size-[160px] flex gap-2 items-center justify-center border-2 border-dashed border-gray-300 cursor-pointer p-4 rounded-md focus:outline-none focus-visible:bg-primary-100',
+              'shrink-0 size-[160px] flex gap-2 items-center justify-center border-2 border-dashed border-gray-300 cursor-pointer p-4 rounded-md focus:outline-none focus-visible:bg-light-100 hover:bg-light-100',
           })}
         >
           <Input {...getInputProps()} />
@@ -74,7 +74,7 @@ export const FileUploader = ({
               <span>Drop here</span>
             </div>
           ) : (
-            <div>
+            <div className="text-muted/70">
               <ImagePlus className="size-10 stroke-1 mb-2 mx-auto" />
               <p className="flex flex-col items-center">
                 <span>Drag and drop</span>

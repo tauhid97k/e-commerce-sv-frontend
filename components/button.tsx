@@ -13,13 +13,13 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-primary-200 hover:bg-primary-300 text-white focus:ring-primary-200/50',
-        secondary: 'bg-light-200 hover:bg-light-100',
+        secondary: 'bg-light-200 hover:bg-light-200/70',
         destructive: 'bg-red-500 text-white hover:bg-red-600',
         outline: 'border hover:bg-light-100',
       },
       size: {
         default: 'h-[42px] px-4 text-base',
-        sm: 'py-2 px-3 text-xs',
+        sm: 'py-2 px-2.5 text-xs rounded',
         icon: 'size-10',
       },
     },
@@ -71,7 +71,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button'
 
     const content = (
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1">
         {isLoading && <LoadingIcon buttonSize={size} />}
         {children}
       </div>

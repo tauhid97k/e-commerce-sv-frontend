@@ -27,7 +27,7 @@ body {
   @apply border rounded-md bg-white;
 }
 .card-header {
-  @apply flex justify-between items-center gap-2 p-4 border-b;
+  @apply flex justify-between items-center gap-2 p-4;
 }
 .card-title {
   @apply text-dark-300 font-medium;
@@ -36,7 +36,7 @@ body {
   @apply flex items-center gap-0.5 text-primary-300;
 }
 .card-body {
-  @apply flex flex-col gap-3 p-4;
+  @apply flex flex-col gap-3 p-4 border-t;
 }
 
 /* TipTap Rich Text Editor Styles */
