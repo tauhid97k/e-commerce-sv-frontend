@@ -64,7 +64,7 @@ export const DataTable = <TData, TValue>({
           <tbody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <tr key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                <tr key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <td
                       className="px-6 py-4 align-middle [&:has([role=checkbox])]:pr-0 max-w-[230px] truncate border-b"
@@ -92,10 +92,10 @@ export const DataTable = <TData, TValue>({
         </table>
       </div>
       <div className="py-4 flex items-center flex-wrap justify-center gap-2 border-t border-zinc-200 dark:border-zinc-700">
-        {data?.meta?.links.map((link) =>
+        {data?.meta?.links.map((link, index) =>
           link.url ? (
             <Link
-              key={link.label}
+              key={index}
               href={handlePagination(link.url)}
               prefetch={false}
               scroll={false}
@@ -107,7 +107,7 @@ export const DataTable = <TData, TValue>({
           ) : (
             <span
               className="h-10 p-3 flex items-center justify-center rounded opacity-70"
-              key={link.label}
+              key={index}
               dangerouslySetInnerHTML={{ __html: link.label }}
             />
           )

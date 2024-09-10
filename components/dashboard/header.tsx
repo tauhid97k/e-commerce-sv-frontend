@@ -17,6 +17,7 @@ import { FormEvent, use } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAxios } from '@/lib/axios'
 import { useRouter } from 'next-nprogress-bar'
+import { getQueryClient } from '@/lib/query-client'
 import { handleSuccess } from '@/lib/handleResponse'
 import { toast } from 'sonner'
 
@@ -24,6 +25,7 @@ const Header = ({ user }: { user: User }) => {
   const { isOpen, setSidebarOpen } = use(SidebarContext)
   const router = useRouter()
   const axios = useAxios()
+  const queryClient = getQueryClient()
 
   const { mutate: logout } = useMutation({
     mutationFn: () => axios.post('/logout'),
@@ -37,6 +39,7 @@ const Header = ({ user }: { user: User }) => {
       onSuccess: (data) => {
         const { message } = handleSuccess(data)
         toast.success(message)
+        queryClient.clear()
         router.replace('/auth/login')
       },
     })

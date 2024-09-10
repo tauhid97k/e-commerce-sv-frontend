@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAuth } from '@/server/auth'
+import { getAuth } from '@/actions/auth'
 
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req

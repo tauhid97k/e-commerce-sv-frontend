@@ -10,11 +10,18 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next-nprogress-bar'
 import { useDebounceCallback } from 'usehooks-ts'
 import { CheckSelector } from '@/components/filters/check-selector'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { getUsers } from '@/actions/users'
 
-const UsersTable = ({ users }: { users: PaginatedData<User> }) => {
+const UsersTable = ({ queries }: { queries: string }) => {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams)
   const router = useRouter()
+
+  const { data: users } = useSuspenseQuery({
+    queryKey: ['users', queries],
+    queryFn: (): Promise<PaginatedData<User>> => getUsers(queries),
+  })
 
   // Users Table Columns
   const columns: ColumnDef<User>[] = [

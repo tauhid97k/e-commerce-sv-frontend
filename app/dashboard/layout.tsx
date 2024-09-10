@@ -1,7 +1,7 @@
 import Header from '@/components/dashboard/header'
 import Sidebar from '@/components/dashboard/sidebar'
 import SidebarProvider from '@/providers/sidebar-provider'
-import { getAuth } from '@/server/auth'
+import { getAuth } from '@/actions/auth'
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const { user } = await getAuth()
