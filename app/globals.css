@@ -36,7 +36,7 @@ body {
   @apply flex items-center gap-0.5 text-primary-300;
 }
 .card-body {
-  @apply flex flex-col gap-3 p-4 border-t;
+  @apply grid gap-3 p-4 border-t;
 }
 
 /* TipTap Rich Text Editor Styles */

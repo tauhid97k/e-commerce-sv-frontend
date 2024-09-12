@@ -108,7 +108,7 @@ export const CheckSelector = ({
         {selectedValues.size > 0 && (
           <button
             onClick={handleClearFilters}
-            className="border-t w-full p-2 hover:bg-light-100"
+            className="border-t w-full p-2 text-primary-300"
           >
             Clear filters
           </button>

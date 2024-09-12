@@ -34,6 +34,10 @@ const UsersTable = ({ queries }: { queries: string }) => {
       accessorKey: 'email',
     },
     {
+      header: 'Role',
+      accessorKey: 'role',
+    },
+    {
       header: 'Status',
       accessorKey: 'status',
     },
