@@ -4,49 +4,45 @@ import { Button } from '@/components/button'
 import { Plus } from 'lucide-react'
 import { Input } from '@/components/input'
 import { DataTable } from '@/components/table'
-import { PaginatedData, User } from '@/lib/dataTypes'
+import { PaginatedData, Category } from '@/lib/dataTypes'
 import { ColumnDef } from '@tanstack/react-table'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next-nprogress-bar'
 import { useDebounceCallback } from 'usehooks-ts'
 import { CheckSelector } from '@/components/filters/check-selector'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { getUsers } from '@/actions/users'
+import { getCategories } from '@/actions/categories'
 
-const UsersTable = ({ queries }: { queries: string }) => {
+const CategoriesTable = ({ queries }: { queries: string }) => {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams)
   const router = useRouter()
 
-  const { data: users } = useSuspenseQuery({
-    queryKey: ['users', queries],
-    queryFn: (): Promise<PaginatedData<User>> => getUsers(queries),
+  const { data: categories } = useSuspenseQuery({
+    queryKey: ['categories', queries],
+    queryFn: (): Promise<PaginatedData<Category>> => getCategories(queries),
   })
 
   // Users Table Columns
-  const columns: ColumnDef<User>[] = [
+  const columns: ColumnDef<Category>[] = [
     {
       header: 'Name',
       accessorKey: 'name',
     },
     {
-      header: 'Email',
-      accessorKey: 'email',
+      header: 'Parent Category',
+      accessorKey: 'parentCategoryName',
     },
     {
-      header: 'Role',
-      accessorKey: 'role',
+      header: 'Slug',
+      accessorKey: 'slug',
     },
     {
-      header: 'Status',
-      accessorKey: 'status',
+      header: 'Visibility',
+      accessorKey: 'isVisible',
     },
     {
-      header: 'Verified At',
-      accessorKey: 'emailVerifiedAt',
-    },
-    {
-      header: 'Joining Date',
+      header: 'Created At',
       accessorKey: 'createdAt',
     },
     {
@@ -56,18 +52,14 @@ const UsersTable = ({ queries }: { queries: string }) => {
   ]
 
   // Status Filters
-  const statusFilterOptions = [
+  const visibilityFilterOptions = [
     {
-      label: 'Active',
-      value: 'active',
+      label: 'Visible',
+      value: 'true',
     },
     {
-      label: 'Inactive',
-      value: 'inactive',
-    },
-    {
-      label: 'Suspended',
-      value: 'suspended',
+      label: 'Invisible',
+      value: 'false',
     },
   ]
 
@@ -93,10 +85,10 @@ const UsersTable = ({ queries }: { queries: string }) => {
     <div className="bg-white border rounded-md overflow-hidden">
       <div className="p-6">
         <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
-          <h2 className="text-3xl text-dark-200">Users</h2>
+          <h2 className="text-3xl text-dark-200">Categories</h2>
           <Button>
             <Plus className="icon" />
-            <span>Add User</span>
+            <span>Add Category</span>
           </Button>
         </div>
         <div className="flex items-center flex-wrap gap-3">
@@ -105,19 +97,19 @@ const UsersTable = ({ queries }: { queries: string }) => {
             name="search"
             defaultValue={params.get('search')?.toString()}
             onChange={handleSearch}
-            placeholder="Search name or email..."
+            placeholder="Search category name..."
             className="sm:w-72"
           />
           <CheckSelector
-            title="Status"
-            filter="status"
-            options={statusFilterOptions}
+            title="Visibility"
+            filter="visibility"
+            options={visibilityFilterOptions}
           />
         </div>
       </div>
-      <DataTable data={users} columns={columns} />
+      <DataTable data={categories} columns={columns} />
     </div>
   )
 }
 
-export default UsersTable
+export default CategoriesTable

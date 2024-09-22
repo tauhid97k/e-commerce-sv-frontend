@@ -2,6 +2,7 @@ import SidebarMenuItem from './menu-item'
 import SidebarMenuCollapsible from './menu-collapsible'
 import MenuCollapsibleItem from './menu-collapsible-item'
 import {
+  Layers3,
   LayoutGrid,
   Package,
   Settings,
@@ -10,46 +11,81 @@ import {
 } from 'lucide-react'
 
 const SidebarMenu = () => {
+  const menuItems = [
+    {
+      text: 'Dashboard',
+      href: '/dashboard',
+      icon: <LayoutGrid className="icon" />,
+    },
+    {
+      text: 'Categories',
+      href: '/dashboard/categories',
+      icon: <Layers3 className="icon" />,
+    },
+    {
+      text: 'Products',
+      basePath: '/dashboard/products',
+      icon: <Package className="icon" />,
+      children: [
+        { text: 'All Products', href: '/dashboard/products' },
+        { text: 'Add Product', href: '/dashboard/products/add' },
+        { text: 'Inventory', href: '/dashboard/products/inventory' },
+      ],
+    },
+    {
+      text: 'Users',
+      basePath: '/dashboard/users',
+      icon: <UsersRound className="icon" />,
+      children: [
+        { text: 'All Users', href: '/dashboard/users' },
+        { text: 'Add User', href: '/dashboard/users/add' },
+      ],
+    },
+    {
+      text: 'Role Permissions',
+      href: '/dashboard/role-permissions',
+      icon: <ShieldCheck className="icon" />,
+    },
+    {
+      text: 'Settings',
+      href: '/dashboard/settings',
+      icon: <Settings className="icon" />,
+    },
+  ]
+
   return (
     <nav className="flex-1 px-4 py-5 overflow-y-auto">
-      <SidebarMenuItem
-        text="Dashboard"
-        href="/dashboard"
-        icon={<LayoutGrid className="icon" />}
-      />
-      <SidebarMenuCollapsible
-        text="Products"
-        basePath="/dashboard/products"
-        icon={<Package className="icon" />}
-      >
-        <MenuCollapsibleItem text="All Products" href="/dashboard/products" />
-        <MenuCollapsibleItem
-          text="Add Product"
-          href="/dashboard/products/add"
-        />
-        <MenuCollapsibleItem
-          text="Inventory"
-          href="/dashboard/products/inventory"
-        />
-      </SidebarMenuCollapsible>
-      <SidebarMenuCollapsible
-        text="Users"
-        basePath="/dashboard/users"
-        icon={<UsersRound className="icon" />}
-      >
-        <MenuCollapsibleItem text="All Users" href="/dashboard/users" />
-        <MenuCollapsibleItem text="Add User" href="/dashboard/users/add" />
-      </SidebarMenuCollapsible>
-      <SidebarMenuItem
-        text="Role Permissions"
-        href="/dashboard/role-permissions"
-        icon={<ShieldCheck className="icon" />}
-      />
-      <SidebarMenuItem
-        text="Settings"
-        href="/dashboard/settings"
-        icon={<Settings className="icon" />}
-      />
+      {menuItems.map((item, index) => {
+        if (item.children && item.children.length > 0) {
+          // Render collapsible menu if children exist
+          return (
+            <SidebarMenuCollapsible
+              key={index}
+              text={item.text}
+              basePath={item.basePath}
+              icon={item.icon}
+            >
+              {item.children.map((child, childIndex) => (
+                <MenuCollapsibleItem
+                  key={childIndex}
+                  text={child.text}
+                  href={child.href}
+                />
+              ))}
+            </SidebarMenuCollapsible>
+          )
+        } else if (item.href) {
+          // Render a single menu item
+          return (
+            <SidebarMenuItem
+              key={index}
+              text={item.text}
+              href={item.href}
+              icon={item.icon}
+            />
+          )
+        }
+      })}
     </nav>
   )
 }

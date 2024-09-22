@@ -31,3 +31,17 @@ export type User = {
   createdAt: Date
   updatedAt: Date
 }
+
+// Category
+export type Category = {
+  id: number
+  name: string
+  parentCategoryName: string
+  slug: string
+  description: string | null
+  isVisible: boolean
+  seoTitle: string | null
+  seoDescription: string | null
+  createdAt: string
+  updatedAt: string
+}

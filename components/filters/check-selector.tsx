@@ -4,11 +4,14 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next-nprogress-bar'
 import { CirclePlus } from 'lucide-react'
 import { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 export const CheckSelector = ({
+  title,
   filter,
   options,
 }: {
+  title: string
   filter: string
   options: Array<{ label: string; value: string }>
 }) => {
@@ -65,7 +68,7 @@ export const CheckSelector = ({
         <div className="flex items-center gap-x-3 divide-x">
           <div className="flex items-center gap-x-1.5 text-dark-200">
             <CirclePlus className="size-5 stroke-[1.5]" />
-            <span>Status</span>
+            <span>{title}</span>
           </div>
           {selectedValues.size > 0 && (
             <div className="flex gap-x-2 pl-3">
@@ -89,7 +92,11 @@ export const CheckSelector = ({
           )}
         </div>
       </PopoverTrigger>
-      <PopoverContent className="max-w-60">
+      <PopoverContent
+        className={cn('w-fit', {
+          'w-[var(--radix-popover-trigger-width)]': selectedValues.size > 0,
+        })}
+      >
         <div className="p-2">
           {options.map(({ label, value }) => (
             <label

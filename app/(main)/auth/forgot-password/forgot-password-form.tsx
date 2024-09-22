@@ -15,7 +15,6 @@ import {
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { forgotPasswordValidator } from '@/validators/authValidator'
-import Link from 'next/link'
 
 const ForgotPasswordForm = () => {
   const form = useForm<z.infer<typeof forgotPasswordValidator>>({
