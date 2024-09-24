@@ -32,16 +32,14 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
 
 // Form Fieldset
 interface FieldsetProps
-  extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {
-  grid?: boolean
-}
+  extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {}
 
 const FormFieldset = React.forwardRef<HTMLFieldSetElement, FieldsetProps>(
-  ({ className, children, grid = false, ...props }, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <fieldset
         className={cn(
-          'grid gap-3 mb-4 disabled:opacity-70 disabled:pointer-events-none',
+          'disabled:opacity-70 disabled:pointer-events-none',
           className
         )}
         ref={ref}

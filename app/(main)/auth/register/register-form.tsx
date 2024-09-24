@@ -50,7 +50,7 @@ const RegisterForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
-        <FormFieldset disabled={isPending}>
+        <FormFieldset disabled={isPending} className="grid gap-3">
           <FormField
             control={form.control}
             name="name"
@@ -104,7 +104,7 @@ const RegisterForm = () => {
             )}
           />
         </FormFieldset>
-        <Button isLoading={isPending} className="w-full">
+        <Button isLoading={isPending} className="w-full mt-5">
           Register
         </Button>
       </form>

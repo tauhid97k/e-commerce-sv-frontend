@@ -73,7 +73,7 @@ const AddProductForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
         <FormFieldset
           disabled={form.formState.isSubmitting}
-          className="grid-cols-1 lg:grid-cols-4 gap-5"
+          className="grid grid-cols-1 lg:grid-cols-4 gap-5"
         >
           <div className="lg:col-span-2 space-y-4">
             {/* Product Details */}
@@ -339,7 +339,7 @@ const AddProductForm = () => {
             </div>
           </div>
         </FormFieldset>
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-5">
           <Button
             type="submit"
             value="publish"

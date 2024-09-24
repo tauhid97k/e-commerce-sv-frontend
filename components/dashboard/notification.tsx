@@ -1,5 +1,5 @@
 import { Bell } from 'lucide-react'
-import { Button } from '@/components/button'
+import { Button, buttonVariants } from '@/components/button'
 import {
   Dropdown,
   DropdownTrigger,
@@ -60,10 +60,10 @@ const Notification = () => {
   return (
     <Dropdown>
       <DropdownTrigger
-        as={Button}
-        variant="outline"
-        size="icon"
-        className="relative after:absolute after:content-[''] after:-top-[3px] after:-right-[3px] after:bg-green-500 after:size-2 after:rounded-full"
+        className={cn(
+          buttonVariants({ variant: 'outline', size: 'icon' }),
+          "relative after:absolute after:content-[''] after:-top-[3px] after:-right-[3px] after:bg-green-500 after:size-2 after:rounded-full"
+        )}
       >
         <Bell className="icon" />
         <span className="sr-only">Toggle notification</span>
@@ -110,7 +110,7 @@ const Notification = () => {
           <DropdownSeparator />
           <Link
             href="#"
-            className="text-sm tracking-wide flex justify-center p-3 hover:bg-light-100"
+            className="text-sm hover:text-primary-300 tracking-wide flex justify-center p-3"
           >
             See All Notifications
           </Link>

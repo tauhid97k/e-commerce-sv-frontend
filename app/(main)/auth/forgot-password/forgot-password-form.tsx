@@ -46,7 +46,7 @@ const ForgotPasswordForm = () => {
             )}
           />
         </FormFieldset>
-        <Button isLoading={form.formState.isSubmitting} className="w-full mb-4">
+        <Button isLoading={form.formState.isSubmitting} className="w-full mt-5">
           Send password reset code
         </Button>
       </form>

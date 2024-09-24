@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
       <ForgotPasswordForm />
       <Link
         href="/auth/login"
-        className="block text-center hover:underline focus:underline focus:outline-none"
+        className="block text-center hover:underline focus:underline focus:outline-none mt-5"
       >
         Go back to login?
       </Link>

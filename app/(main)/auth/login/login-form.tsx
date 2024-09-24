@@ -73,7 +73,7 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormFieldset disabled={isPending}>
+        <FormFieldset disabled={isPending} className="grid gap-3">
           <FormField
             control={form.control}
             name="email"
@@ -127,7 +127,7 @@ const LoginForm = () => {
             </Link>
           </div>
         </FormFieldset>
-        <Button isLoading={isPending} className="w-full">
+        <Button isLoading={isPending} className="w-full mt-5">
           Login
         </Button>
       </form>

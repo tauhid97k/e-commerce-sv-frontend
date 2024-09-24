@@ -1,69 +1,46 @@
-import * as React from 'react'
+import React from 'react'
+import { cn } from '@/lib/utils'
 import {
   Menu,
   MenuProps,
   MenuButton,
   MenuButtonProps,
-  MenuSection,
-  MenuSectionProps,
-  MenuSeparator,
-  MenuSeparatorProps,
   MenuHeading,
   MenuHeadingProps,
-  MenuItem,
-  MenuItemProps,
+  MenuSection,
+  MenuSectionProps,
   MenuItems,
   MenuItemsProps,
+  MenuItem,
+  MenuItemProps,
+  MenuSeparator,
+  MenuSeparatorProps,
 } from '@headlessui/react'
-import { cn } from '@/lib/utils'
 
-// Dropdown Root
-type DropdownProps = MenuProps & { children: React.ReactNode }
-
-const Dropdown = ({ children, ...props }: DropdownProps) => {
+// Root Component
+const Dropdown: React.FC<MenuProps> = ({ children, ...props }) => {
   return <Menu {...props}>{children}</Menu>
 }
 
-// Dropdown Trigger
-type DropdownTriggerProps<T extends React.ElementType = typeof React.Fragment> =
-  Omit<MenuButtonProps, 'as'> & {
-    as?: T
-    children: React.ReactNode
-    className?: string
-  } & React.ComponentPropsWithRef<T>
-
-const DropdownTrigger = <T extends React.ElementType = typeof React.Fragment>({
-  as = React.Fragment,
-  children,
-  className,
-  ...props
-}: DropdownTriggerProps<T>) => {
-  return (
-    <MenuButton
-      as={as}
-      className={cn('focus-within:outline-primary-200/50', className)}
-      {...props}
-    >
-      {children}
-    </MenuButton>
-  )
+// Trigger Component
+const DropdownTrigger: React.FC<MenuButtonProps> = ({ children, ...props }) => {
+  return <MenuButton {...props}>{children}</MenuButton>
 }
 
 // Dropdown Section
-type DropdownSectionProps = MenuSectionProps & { children: React.ReactNode }
-
-const DropdownSection = ({ children, ...props }: DropdownSectionProps) => {
+const DropdownSection: React.FC<MenuSectionProps> = ({
+  children,
+  ...props
+}) => {
   return <MenuSection {...props}>{children}</MenuSection>
 }
 
 // Dropdown Heading
-type DropdownHeadingProps = MenuHeadingProps & { children: React.ReactNode }
-
-const DropdownHeading = ({
+const DropdownHeading: React.FC<MenuHeadingProps> = ({
   children,
   className,
   ...props
-}: DropdownHeadingProps) => {
+}) => {
   return (
     <MenuHeading
       className={cn('flex justify-between items-center gap-4 p-3', className)}
@@ -75,14 +52,11 @@ const DropdownHeading = ({
 }
 
 // Dropdown Items
-type DropdownItemsProps = MenuItemsProps & { children: React.ReactNode }
-
-const DropdownItems = ({ children, className }: DropdownItemsProps) => {
+const DropdownItems: React.FC<MenuItemsProps> = ({ children, className }) => {
   return (
     <MenuItems
-      modal={false}
-      transition
       anchor="bottom end"
+      transition
       className={cn(
         'w-44 z-50 origin-top-right transition ease-out data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-300 [--anchor-padding:16px] bg-white shadow-lg border rounded-md mt-2 focus:outline-none',
         className
@@ -93,30 +67,26 @@ const DropdownItems = ({ children, className }: DropdownItemsProps) => {
   )
 }
 
-// Dropdown Separator
-const DropdownSeparator = ({ ...props }: MenuSeparatorProps) => (
-  <MenuSeparator className="border-b" {...props} />
-)
-
 // Dropdown Item
-type DropdownItemProps<T extends React.ElementType = typeof React.Fragment> =
-  Omit<MenuItemProps, 'as'> & {
-    as?: T
-    destructive?: boolean
-    children: React.ReactNode
-    className?: string
-  } & React.ComponentPropsWithRef<T>
+type DropdownItemProps<T extends React.ElementType = 'button'> = Omit<
+  MenuItemProps,
+  'as'
+> & {
+  as?: T
+  destructive?: boolean
+} & React.ComponentPropsWithRef<T>
 
-const DropdownItem = <T extends React.ElementType = typeof React.Fragment>({
+// Dropdown Item Component
+const DropdownItem = <T extends React.ElementType = 'button'>({
   children,
-  as = React.Fragment,
+  as: Component = 'button',
   destructive,
   className,
   ...props
 }: DropdownItemProps<T>) => {
   return (
     <MenuItem
-      as={as}
+      as={Component}
       className={cn(
         'w-full flex items-center gap-x-1.5 py-2 px-3 rounded-md data-[focus]:bg-light-100 focus:outline-none cursor-pointer',
         {
@@ -131,12 +101,17 @@ const DropdownItem = <T extends React.ElementType = typeof React.Fragment>({
   )
 }
 
+// Dropdown Separator
+const DropdownSeparator: React.FC<MenuSeparatorProps> = ({ ...props }) => {
+  return <MenuSeparator className="border-b" {...props} />
+}
+
 export {
   Dropdown,
   DropdownTrigger,
   DropdownSection,
   DropdownHeading,
   DropdownItems,
-  DropdownSeparator,
   DropdownItem,
+  DropdownSeparator,
 }
