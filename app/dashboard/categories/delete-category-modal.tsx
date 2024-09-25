@@ -63,7 +63,7 @@ const DeleteCategoryModal = ({
             This action cannot be undone. This will permanently delete the
             category and remove associated products.
           </p>
-          <div className="flex justify-end gap-3 p-5">
+          <div className="flex justify-end gap-3 py-5">
             <Button
               type="button"
               onClick={() => setModalOpen(false)}

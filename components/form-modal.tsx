@@ -10,6 +10,7 @@ import { Form, FormFieldset } from '@/components/form'
 import { UseFormReturn } from 'react-hook-form'
 import { Button } from './button'
 import { FormHTMLAttributes } from 'react'
+import { X } from 'lucide-react'
 
 // Modal Props Interface
 interface ModalInterface extends FormHTMLAttributes<HTMLFormElement> {
@@ -43,21 +44,27 @@ const FormModal = ({
         transition
         className="fixed inset-0 bg-gray-500/75 duration-300 ease-out data-[closed]:opacity-0"
       />
-      <div className="fixed inset-0 size-full flex items-center justify-center p-4">
+      <div className="fixed inset-0 size-full grid place-items-center p-8 overflow-y-auto">
         <DialogPanel
           transition
-          className="w-full max-w-md bg-white shadow-xl rounded-lg duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+          className="w-full max-w-2xl bg-white shadow-xl rounded-lg duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
         >
-          <DialogTitle className="font-medium leading-none p-5 border-b">
-            {title}
-          </DialogTitle>
+          <div className="flex items-center justify-between px-5 py-4 border-b">
+            <DialogTitle className="font-medium leading-none">
+              {title}
+            </DialogTitle>
+            <button
+              onClick={close}
+              className="rounded-full hover:text-dark-300"
+            >
+              <X className="size-6 stroke-[1.5]" />
+            </button>
+          </div>
 
           <Form {...form}>
             <form {...formProps}>
               <FormFieldset disabled={isPending}>
-                <div className="max-h-[70vh] grid gap-3 py-4 px-5 overflow-y-auto">
-                  {children}
-                </div>
+                <div className="grid grid-cols-2 gap-3 p-5">{children}</div>
                 <div className="flex justify-end gap-3 py-3 px-5 border-t">
                   <Button type="button" onClick={close} variant="secondary">
                     Cancel

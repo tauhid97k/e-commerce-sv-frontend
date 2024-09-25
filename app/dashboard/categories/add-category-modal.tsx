@@ -11,7 +11,6 @@ import {
   FormMessage,
 } from '@/components/form'
 import { AsyncSelectCombobox } from '@/components/async-combobox'
-import { SelectCombobox } from '@/components/combobox'
 import { getQueryClient } from '@/lib/query-client'
 import { FieldPath, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,6 +21,7 @@ import { useAxios } from '@/lib/axios'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Input } from '@/components/input'
 import slugify from 'slugify'
+import { Switch } from '@/components/switch'
 
 const AddCategoryModal = ({
   isModalOpen,
@@ -54,7 +54,7 @@ const AddCategoryModal = ({
       name: '',
       slug: '',
       description: '',
-      is_visible: '',
+      is_visible: false,
       seo_title: '',
       seo_description: '',
     },
@@ -99,18 +99,6 @@ const AddCategoryModal = ({
     setModalOpen(false)
     form.reset()
   }
-
-  // Visibility Options
-  const visibilityOptions = [
-    {
-      label: 'Visible',
-      value: 'true',
-    },
-    {
-      label: 'Invisible',
-      value: 'false',
-    },
-  ]
 
   return (
     <FormModal
@@ -158,7 +146,7 @@ const AddCategoryModal = ({
         control={form.control}
         name="parent_id"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="col-span-2">
             <FormLabel>Parent Category</FormLabel>
             <FormControl>
               <AsyncSelectCombobox
@@ -175,31 +163,9 @@ const AddCategoryModal = ({
       />
       <FormField
         control={form.control}
-        name="is_visible"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Visibility</FormLabel>
-            <FormControl>
-              <SelectCombobox
-                options={visibilityOptions}
-                placeholder="Select Visibility"
-                value={visibilityOptions.find(
-                  (option) => option.value === field.value
-                )}
-                onChange={(selectedOption) =>
-                  field.onChange(selectedOption?.value)
-                }
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
         name="description"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="col-span-2">
             <FormLabel>Description</FormLabel>
             <FormControl>
               <Textarea {...field} />
@@ -212,7 +178,7 @@ const AddCategoryModal = ({
         control={form.control}
         name="seo_title"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="col-span-2">
             <FormLabel>SEO Title</FormLabel>
             <FormControl>
               <Input type="text" {...field} />
@@ -225,11 +191,26 @@ const AddCategoryModal = ({
         control={form.control}
         name="seo_description"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="col-span-2">
             <FormLabel>SEO Description</FormLabel>
             <FormControl>
               <Textarea {...field} />
             </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="is_visible"
+        render={({ field }) => (
+          <FormItem className="flex gap-2 items-center mt-2">
+            <FormControl>
+              <Switch checked={field.value} onCheckedChange={field.onChange} />
+            </FormControl>
+            <FormLabel className="text-sm font-normal !m-0">
+              Visible to customers
+            </FormLabel>
             <FormMessage />
           </FormItem>
         )}

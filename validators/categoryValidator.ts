@@ -4,7 +4,7 @@ export const categoryValidator = z.object({
   parent_id: z.string().optional(),
   name: z.string().min(1, 'Name is required'),
   slug: z.string().min(1, 'Slug is required').max(255),
-  is_visible: z.string().min(1, 'Visibility is required'),
+  is_visible: z.boolean(),
   description: z.string().optional(),
   seo_title: z
     .string()

@@ -37,7 +37,7 @@ export type Category = {
   id: number
   name: string
   parentCategoryName: string
-  slug: string
+  slug: boolean
   description: string | null
   isVisible: boolean
   seoTitle: string | null
