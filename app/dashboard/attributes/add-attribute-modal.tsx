@@ -34,7 +34,7 @@ const AddAttributeModal = ({
   // Add Attribute
   const { mutate: addAttribute, isPending } = useMutation({
     mutationFn: (formData: z.infer<typeof attributeValidator>) =>
-      axios.post('/attributes', formData),
+      axios.post('/admin/attributes', formData),
   })
 
   // Form Config

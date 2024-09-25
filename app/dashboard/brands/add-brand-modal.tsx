@@ -35,7 +35,7 @@ const AddBrandModal = ({
   // Add Brand
   const { mutate: addBrand, isPending } = useMutation({
     mutationFn: (formData: z.infer<typeof brandValidator>) =>
-      axios.post('/brands', formData),
+      axios.post('/admin/brands', formData),
   })
 
   // Form Config

@@ -23,7 +23,7 @@ const DeleteCategoryModal = ({
 
   // Delete Category Mutation
   const { mutate: deleteCategory, isPending } = useMutation({
-    mutationFn: () => axios.delete(`categories/${categoryId}`),
+    mutationFn: () => axios.delete(`/admin/categories/${categoryId}`),
   })
 
   // Handle Delete Category

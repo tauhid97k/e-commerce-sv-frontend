@@ -43,7 +43,7 @@ const AddCategoryModal = ({
   // Add Category
   const { mutate: addCategory, isPending } = useMutation({
     mutationFn: (formData: z.infer<typeof categoryValidator>) =>
-      axios.post('/categories', formData),
+      axios.post('/admin/categories', formData),
   })
 
   // Form Config

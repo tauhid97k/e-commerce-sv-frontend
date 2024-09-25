@@ -23,7 +23,7 @@ const DeleteAttributeModal = ({
 
   // Delete Attribute Mutation
   const { mutate: deleteAttribute, isPending } = useMutation({
-    mutationFn: () => axios.delete(`attributes/${attributeId}`),
+    mutationFn: () => axios.delete(`/admin/attributes/${attributeId}`),
   })
 
   // Handle Delete Attribute

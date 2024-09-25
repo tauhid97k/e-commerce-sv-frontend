@@ -23,7 +23,7 @@ const DeleteBrandModal = ({
 
   // Delete Brand Mutation
   const { mutate: deleteBrand, isPending } = useMutation({
-    mutationFn: () => axios.delete(`brands/${brandId}`),
+    mutationFn: () => axios.delete(`/admin/brands/${brandId}`),
   })
 
   // Handle Delete Brand
