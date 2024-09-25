@@ -7,7 +7,7 @@ import { LoaderCircle } from 'lucide-react'
 
 // Variants
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary/50 disabled:opacity-70 disabled:pointer-events-none',
+  'flex shrink-0 items-center justify-center whitespace-nowrap rounded-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary/50 disabled:opacity-70 disabled:pointer-events-none',
   {
     variants: {
       variant: {
@@ -20,8 +20,8 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-[42px] px-4 text-base',
-        sm: 'py-2 px-2.5 text-xs rounded',
-        icon: 'size-10',
+        sm: 'py-2 px-2.5 text-[15px]',
+        icon: 'size-[42px] aspect-squire',
       },
     },
     defaultVariants: {

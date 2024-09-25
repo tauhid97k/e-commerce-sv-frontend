@@ -59,3 +59,12 @@ export type Brand = {
   createdAt: string
   updatedAt: string
 }
+
+// Attribute
+export type Attribute = {
+  id: number
+  name: string
+  totalValues: number
+  createdAt: string
+  updatedAt: string
+}

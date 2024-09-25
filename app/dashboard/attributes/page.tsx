@@ -1,9 +1,9 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
-import { getCategories } from '@/actions/categories'
+import { getAttributes } from '@/actions/attributes'
 import { getQueryClient } from '@/lib/query-client'
-import CategoriesTable from './table'
+import AttributesTable from './table'
 
-const CategoriesPage = ({
+const AttributesPage = ({
   searchParams,
 }: {
   searchParams?: {
@@ -21,17 +21,17 @@ const CategoriesPage = ({
 
   const queries = `page=${page}&search=${search}&visibility=${visibility}`
 
-  // Prefetch Categories
+  // Prefetch Attributes
   queryClient.prefetchQuery({
-    queryKey: ['categories', queries],
-    queryFn: () => getCategories(queries),
+    queryKey: ['attributes', queries],
+    queryFn: () => getAttributes(queries),
   })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <CategoriesTable queries={queries} />
+      <AttributesTable queries={queries} />
     </HydrationBoundary>
   )
 }
 
-export default CategoriesPage
+export default AttributesPage

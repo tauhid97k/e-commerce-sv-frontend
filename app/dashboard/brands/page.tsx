@@ -21,7 +21,7 @@ const BrandsPage = ({
 
   const queries = `page=${page}&search=${search}&visibility=${visibility}`
 
-  // Prefetch Users
+  // Prefetch Brands
   queryClient.prefetchQuery({
     queryKey: ['brands', queries],
     queryFn: () => getBrands(queries),

@@ -3,6 +3,7 @@ import SidebarMenuCollapsible from './menu-collapsible'
 import MenuCollapsibleItem from './menu-collapsible-item'
 import {
   Album,
+  Blend,
   LayoutGrid,
   Package,
   Settings,
@@ -19,24 +20,28 @@ const SidebarMenu = () => {
       icon: <LayoutGrid className="icon" />,
     },
     {
-      text: 'Categories',
-      href: '/dashboard/categories',
-      icon: <Tag className="icon" />,
-    },
-    {
-      text: 'Brands',
-      href: '/dashboard/brands',
-      icon: <Album className="icon" />,
-    },
-    {
       text: 'Products',
       basePath: '/dashboard/products',
       icon: <Package className="icon" />,
       children: [
         { text: 'All Products', href: '/dashboard/products' },
         { text: 'Add Product', href: '/dashboard/products/add' },
-        { text: 'Inventory', href: '/dashboard/products/inventory' },
       ],
+    },
+    {
+      text: 'Categories',
+      href: '/dashboard/categories',
+      icon: <Tag className="icon" />,
+    },
+    {
+      text: 'Attributes',
+      href: '/dashboard/attributes',
+      icon: <Blend className="icon" />,
+    },
+    {
+      text: 'Brands',
+      href: '/dashboard/brands',
+      icon: <Album className="icon" />,
     },
     {
       text: 'Users',
