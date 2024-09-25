@@ -2,11 +2,12 @@ import SidebarMenuItem from './menu-item'
 import SidebarMenuCollapsible from './menu-collapsible'
 import MenuCollapsibleItem from './menu-collapsible-item'
 import {
-  Layers3,
+  Album,
   LayoutGrid,
   Package,
   Settings,
   ShieldCheck,
+  Tag,
   UsersRound,
 } from 'lucide-react'
 
@@ -20,7 +21,12 @@ const SidebarMenu = () => {
     {
       text: 'Categories',
       href: '/dashboard/categories',
-      icon: <Layers3 className="icon" />,
+      icon: <Tag className="icon" />,
+    },
+    {
+      text: 'Brands',
+      href: '/dashboard/brands',
+      icon: <Album className="icon" />,
     },
     {
       text: 'Products',

@@ -10,20 +10,19 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/form'
-import { AsyncSelectCombobox } from '@/components/async-combobox'
 import { getQueryClient } from '@/lib/query-client'
 import { FieldPath, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { categoryValidator } from '@/validators/categoryValidator'
+import { brandValidator } from '@/validators/brandValidator'
 import { handleError, handleSuccess } from '@/lib/handleResponse'
 import { toast } from 'sonner'
 import { useAxios } from '@/lib/axios'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Input } from '@/components/input'
 import { Switch } from '@/components/switch'
 import slugify from 'slugify'
 
-const AddCategoryModal = ({
+const AddBrandModal = ({
   isModalOpen,
   setModalOpen,
 }: {
@@ -33,26 +32,19 @@ const AddCategoryModal = ({
   const axios = useAxios()
   const queryClient = getQueryClient()
 
-  // Get Categories (For Select Option)
-  const { data: categoryOptions, isLoading: isCategoryLoading } = useQuery({
-    queryKey: ['categoryOptions'],
-    queryFn: () =>
-      axios.get('/options/categories').then((response) => response.data),
-  })
-
-  // Add Category
-  const { mutate: addCategory, isPending } = useMutation({
-    mutationFn: (formData: z.infer<typeof categoryValidator>) =>
-      axios.post('/categories', formData),
+  // Add Brand
+  const { mutate: addBrand, isPending } = useMutation({
+    mutationFn: (formData: z.infer<typeof brandValidator>) =>
+      axios.post('/brands', formData),
   })
 
   // Form Config
-  const form = useForm<z.infer<typeof categoryValidator>>({
-    resolver: zodResolver(categoryValidator),
+  const form = useForm<z.infer<typeof brandValidator>>({
+    resolver: zodResolver(brandValidator),
     defaultValues: {
-      parent_id: '',
       name: '',
       slug: '',
+      website: '',
       description: '',
       is_visible: false,
       seo_title: '',
@@ -60,15 +52,15 @@ const AddCategoryModal = ({
     },
   })
 
-  // Slug generation from category name
+  // Slug generation from brand name
   const handleSlug = (value: string) => {
     const generatedSlug = slugify(value, { lower: true, strict: true })
     form.setValue('slug', generatedSlug)
   }
 
-  // Add Category Form Handler
-  const onSubmit = (values: z.infer<typeof categoryValidator>) => {
-    addCategory(values, {
+  // Add Brand Form Handler
+  const onSubmit = (values: z.infer<typeof brandValidator>) => {
+    addBrand(values, {
       onError: (data) => {
         const { validationErrors, error } = handleError(data)
         if (validationErrors.length) {
@@ -85,9 +77,9 @@ const AddCategoryModal = ({
         const { message } = handleSuccess(data)
         form.reset()
         setModalOpen(false)
-        queryClient.invalidateQueries({ queryKey: ['categories'] })
+        queryClient.invalidateQueries({ queryKey: ['brands'] })
         queryClient.invalidateQueries({
-          queryKey: ['categoryOptions'],
+          queryKey: ['brandOptions'],
         })
         toast.success(message)
       },
@@ -103,7 +95,7 @@ const AddCategoryModal = ({
   return (
     <FormModal
       form={form}
-      title="Add New Category"
+      title="Add New Brand"
       isOpen={isModalOpen}
       onClose={closeModal}
       onSubmit={form.handleSubmit(onSubmit)}
@@ -115,7 +107,7 @@ const AddCategoryModal = ({
         name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Category Name</FormLabel>
+            <FormLabel>Brand Name</FormLabel>
             <FormControl>
               <Input
                 type="text"
@@ -145,18 +137,12 @@ const AddCategoryModal = ({
       />
       <FormField
         control={form.control}
-        name="parent_id"
+        name="website"
         render={({ field }) => (
           <FormItem className="col-span-2">
-            <FormLabel>Parent Category</FormLabel>
+            <FormLabel>Brand Website</FormLabel>
             <FormControl>
-              <AsyncSelectCombobox
-                defaultOptions={categoryOptions}
-                isLoading={isCategoryLoading}
-                onChange={(selectedOption) => {
-                  field.onChange(selectedOption?.value)
-                }}
-              />
+              <Input type="text" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -220,4 +206,4 @@ const AddCategoryModal = ({
   )
 }
 
-export default AddCategoryModal
+export default AddBrandModal

@@ -4,14 +4,14 @@ import { Button, buttonVariants } from '@/components/button'
 import { EllipsisVertical, Eye, Pencil, Plus, Trash } from 'lucide-react'
 import { Input } from '@/components/input'
 import { DataTable } from '@/components/table'
-import { PaginatedData, Category } from '@/lib/dataTypes'
+import { PaginatedData, Brand } from '@/lib/dataTypes'
 import { ColumnDef } from '@tanstack/react-table'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next-nprogress-bar'
 import { useDebounceCallback } from 'usehooks-ts'
 import { CheckSelector } from '@/components/filters/check-selector'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { getCategories } from '@/actions/categories'
+import { getBrands } from '@/actions/brands'
 import {
   Dropdown,
   DropdownItem,
@@ -20,38 +20,36 @@ import {
 } from '@/components/dropdown'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
-import AddCategoryModal from './add-category-modal'
-import DeleteCategoryModal from './delete-category-modal'
+import AddBrandModal from './add-brand-modal'
+import DeleteBrandModal from './delete-brand-modal'
 
-const CategoriesTable = ({ queries }: { queries: string }) => {
-  const [addCategoryModal, setAddCategoryModal] = useState(false)
-  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false)
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | string>(
-    ''
-  )
+const BrandsTable = ({ queries }: { queries: string }) => {
+  const [addBrandModal, setAddBrandModal] = useState(false)
+  const [deleteBrandModal, setDeleteBrandModal] = useState(false)
+  const [selectedBrandId, setSelectedBrandId] = useState<number | string>('')
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams)
   const router = useRouter()
 
-  // Get Categories
-  const { data: categories } = useSuspenseQuery({
-    queryKey: ['categories', queries],
-    queryFn: (): Promise<PaginatedData<Category>> => getCategories(queries),
+  // Get Brands
+  const { data: brands } = useSuspenseQuery({
+    queryKey: ['brands', queries],
+    queryFn: (): Promise<PaginatedData<Brand>> => getBrands(queries),
   })
 
-  // Category Table Columns
-  const columns: ColumnDef<Category>[] = [
+  // Brand Table Columns
+  const columns: ColumnDef<Brand>[] = [
     {
       header: 'Name',
       accessorKey: 'name',
     },
     {
-      header: 'Parent Category',
-      accessorKey: 'parentCategoryName',
-    },
-    {
       header: 'Slug',
       accessorKey: 'slug',
+    },
+    {
+      header: 'Website',
+      accessorKey: 'website',
     },
     {
       header: 'Visibility',
@@ -93,8 +91,8 @@ const CategoriesTable = ({ queries }: { queries: string }) => {
                 </DropdownItem>
                 <DropdownItem
                   onClick={() => {
-                    setSelectedCategoryId(id)
-                    setDeleteCategoryModal(true)
+                    setSelectedBrandId(id)
+                    setDeleteBrandModal(true)
                   }}
                   destructive
                 >
@@ -144,10 +142,10 @@ const CategoriesTable = ({ queries }: { queries: string }) => {
       <div className="bg-white border rounded-md overflow-hidden">
         <div className="p-6">
           <div className="flex justify-between items-center flex-wrap gap-3 mb-4">
-            <h2 className="text-2xl text-dark-200">Categories</h2>
-            <Button onClick={() => setAddCategoryModal(true)}>
+            <h2 className="text-2xl text-dark-200">Brands</h2>
+            <Button onClick={() => setAddBrandModal(true)}>
               <Plus className="icon" />
-              <span>Add Category</span>
+              <span>Add Brand</span>
             </Button>
           </div>
           <div className="flex items-center flex-wrap gap-3">
@@ -156,7 +154,7 @@ const CategoriesTable = ({ queries }: { queries: string }) => {
               name="search"
               defaultValue={params.get('search')?.toString()}
               onChange={handleSearch}
-              placeholder="Search category name..."
+              placeholder="Search brand name..."
               className="sm:w-72"
             />
             <CheckSelector
@@ -166,23 +164,23 @@ const CategoriesTable = ({ queries }: { queries: string }) => {
             />
           </div>
         </div>
-        <DataTable data={categories} columns={columns} />
+        <DataTable data={brands} columns={columns} />
       </div>
 
-      {/* Add Category Form Modal */}
-      <AddCategoryModal
-        isModalOpen={addCategoryModal}
-        setModalOpen={setAddCategoryModal}
+      {/* Add Brand Form Modal */}
+      <AddBrandModal
+        isModalOpen={addBrandModal}
+        setModalOpen={setAddBrandModal}
       />
 
-      {/* Delete Category Modal */}
-      <DeleteCategoryModal
-        isModalOpen={deleteCategoryModal}
-        setModalOpen={setDeleteCategoryModal}
-        categoryId={selectedCategoryId}
+      {/* Delete Brand Modal */}
+      <DeleteBrandModal
+        isModalOpen={deleteBrandModal}
+        setModalOpen={setDeleteBrandModal}
+        brandId={selectedBrandId}
       />
     </>
   )
 }
 
-export default CategoriesTable
+export default BrandsTable

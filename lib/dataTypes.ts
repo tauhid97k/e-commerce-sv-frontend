@@ -45,3 +45,17 @@ export type Category = {
   createdAt: string
   updatedAt: string
 }
+
+// Brand
+export type Brand = {
+  id: number
+  name: string
+  slug: boolean
+  website: string
+  description: string | null
+  isVisible: boolean
+  seoTitle: string | null
+  seoDescription: string | null
+  createdAt: string
+  updatedAt: string
+}
