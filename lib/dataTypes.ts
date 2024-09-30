@@ -69,6 +69,7 @@ export type Attribute = {
   updatedAt: string;
 };
 
+// Product
 export type Product = {
   id: number;
   name: string;
@@ -83,4 +84,16 @@ export type Product = {
   publishedAt?: string;
   createdAt?: string;
   updatedAt?: string;
+};
+
+// Review
+export type Review = {
+  id: number;
+  product: string;
+  user: string;
+  rating: number;
+  review: string;
+  isApproved: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
