@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm, useFieldArray } from 'react-hook-form'
-import * as z from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, useFieldArray, FieldPath } from "react-hook-form";
+import * as z from "zod";
 import {
   Form,
   FormFieldset,
@@ -11,68 +11,141 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/form'
-import { Input } from '@/components/input'
-import { Button } from '@/components/button'
-import { TipTapEditor } from '@/components/tiptap-editor'
-import { FileUploader } from '@/components/file-uploader'
-import { productValidator } from '@/validators/productValidator'
-import { Plus, Trash } from 'lucide-react'
-import { SelectCombobox } from '@/components/combobox'
+  FormDescription,
+} from "@/components/form";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
+import { TipTapEditor } from "@/components/tiptap-editor";
+import { FileUploader } from "@/components/file-uploader";
+import { productValidator } from "@/validators/productValidator";
+import { AsyncSelectCombobox } from "@/components/async-combobox";
+import { Switch } from "@/components/switch";
+import { Textarea } from "@/components/textarea";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useAxios } from "@/lib/axios";
+import { useState } from "react";
+import { getQueryClient } from "@/lib/query-client";
+import { handleError, handleSuccess } from "@/lib/handleResponse";
+import { toast } from "sonner";
+import slugify from "slugify";
 
 const AddProductForm = () => {
+  const axios = useAxios();
+  const queryClient = getQueryClient();
+  const [selectedAttributeId, setSelectedAttributeId] = useState("");
+
   const form = useForm<z.infer<typeof productValidator>>({
     resolver: zodResolver(productValidator),
     defaultValues: {
-      name: '',
-      slug: 'Some slug',
-      description: '',
-      brand: '',
+      name: "",
+      slug: "",
+      description: "",
+      brand: null,
       categories: [],
       images: [],
-      variants: [],
+      variants: [
+        {
+          attributes: [],
+          sku: {
+            sku: "",
+            barcode: "",
+            quantity: 0,
+            stock_visibility: false,
+            stock_alert: 0,
+            old_price: 0,
+            price: 0,
+            cost: 0,
+          },
+          images: [],
+        },
+      ],
+      is_featured: false,
+      is_new: false,
+      is_visible: false,
+      published_at: undefined,
+      seo_title: "",
+      seo_description: "",
     },
-  })
+  });
+
+  // Get Categories (For Select Option)
+  const { data: categoryOptions, isLoading: isCategoryLoading } = useQuery({
+    queryKey: ["categoryOptions"],
+    queryFn: () =>
+      axios.get("/options/categories").then((response) => response.data),
+  });
+
+  // Get Brands (For Select Option)
+  const { data: brandOptions, isLoading: isBrandLoading } = useQuery({
+    queryKey: ["brandOptions"],
+    queryFn: () =>
+      axios.get("/options/brands").then((response) => response.data),
+  });
+
+  // Get Attributes (For Select Option)
+  const { data: attributeOptions, isLoading: isAttributeLoading } = useQuery({
+    queryKey: ["attributeOptions"],
+    queryFn: () =>
+      axios.get("/options/attributes").then((response) => response.data),
+  });
+
+  // Get Attribute Values (For Select Option)
+  const { data: attributeValuesOptions, isLoading: isAttributeValuesLoading } =
+    useQuery({
+      queryKey: ["attributeValuesOptions", selectedAttributeId],
+      queryFn: () =>
+        axios
+          .get(`/options/attributes/${selectedAttributeId}`)
+          .then((response) => response.data),
+      enabled: !!selectedAttributeId,
+    });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'variants',
-  })
+    name: "variants",
+  });
 
-  // Submit form
-  const onSubmit = (values: any) => {
-    // Code
-    console.log(values)
-  }
+  // Add Product
+  const { mutate: addProduct, isPending } = useMutation({
+    mutationFn: (formData: z.infer<typeof productValidator>) =>
+      axios.post("/admin/products", formData),
+  });
 
-  const brandOptions = [
-    { value: '1', label: 'Le Reve' },
-    { value: '2', label: 'Cats Eye' },
-    { value: '3', label: 'Arong' },
-    { value: '4', label: 'Richman' },
-    { value: '5', label: 'Yellow' },
-  ]
+  // Add Product Form Handler
+  const onSubmit = (values: z.infer<typeof productValidator>) => {
+    addProduct(values, {
+      onError: (data) => {
+        const { validationErrors, error } = handleError(data);
+        if (validationErrors.length) {
+          validationErrors.map(({ field, message }) => {
+            form.setError(field as FieldPath<typeof values>, {
+              message,
+            });
+          });
+        } else if (error) {
+          toast.error(error);
+        }
+      },
+      onSuccess: (data) => {
+        const { message } = handleSuccess(data);
+        form.reset();
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+        toast.success(message);
+      },
+    });
+  };
 
-  const categoryOptions = [
-    { value: '1', label: 'T-Shirt' },
-    { value: '2', label: 'Hoodie' },
-  ]
-
-  const attributes = [
-    { value: '1', label: 'Color' },
-    { value: '2', label: 'Size' },
-  ]
-
-  const attributeOptions = [
-    { value: '1', label: 'Red' },
-    { value: '2', label: 'Black' },
-  ]
+  // Slug generation from product name
+  const handleSlug = (value: string) => {
+    const generatedSlug = slugify(value, { lower: true, strict: true });
+    form.setValue("slug", generatedSlug, { shouldValidate: true });
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
         <FormFieldset
-          disabled={form.formState.isSubmitting}
+          disabled={isPending}
           className="grid grid-cols-1 lg:grid-cols-4 gap-5"
         >
           <div className="lg:col-span-2 space-y-4">
@@ -89,7 +162,15 @@ const AddProductForm = () => {
                     <FormItem>
                       <FormLabel isRequired>Product Name</FormLabel>
                       <FormControl>
-                        <Input type="text" {...field} />
+                        <Input
+                          type="text"
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            field.onChange(value);
+                            handleSlug(value);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -102,7 +183,7 @@ const AddProductForm = () => {
                     <FormItem>
                       <FormLabel isRequired>Product Slug</FormLabel>
                       <FormControl>
-                        <Input type="text" {...field} disabled />
+                        <Input type="text" {...field} disabled readOnly />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -127,72 +208,50 @@ const AddProductForm = () => {
               </div>
             </div>
 
-            {/* Product Variant */}
-            <div className="card">
-              <div className="card-header">
-                <h5 className="card-title">
-                  Product Variants &#40;{fields.length}&#41;
-                </h5>
-                <button
-                  onClick={() =>
-                    append({
-                      attribute: '',
-                      attribute_options: [],
-                      images: [],
-                    })
-                  }
-                  type="button"
-                  className="card-btn"
-                >
-                  <Plus className="icon" />
-                  <span>Add Variant</span>
-                </button>
-              </div>
-              {fields.length > 0 && (
-                <div className="card-body">
-                  {fields.map((field, index) => (
-                    <div key={field.id} className="space-y-4">
+            {fields.map((field, index) => (
+              <div key={field.id} className="space-y-4">
+                {/* Product Attributes */}
+                <div className="card">
+                  <div className="card-header">
+                    <h5 className="card-title">Product Attributes</h5>
+                  </div>
+                  <div className="card-body">
+                    <div className="space-y-4">
+                      <div className="space-y-1.5">
+                        <FormLabel>Attribute</FormLabel>
+                        <AsyncSelectCombobox
+                          defaultOptions={attributeOptions}
+                          isLoading={isAttributeLoading}
+                          onChange={(selectedOption) => {
+                            setSelectedAttributeId(
+                              selectedOption?.value as string
+                            );
+                          }}
+                        />
+                      </div>
                       <FormField
                         control={form.control}
-                        name={`variants.${index}.attribute`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Attribute</FormLabel>
-                            <FormControl>
-                              <SelectCombobox
-                                options={attributes}
-                                placeholder="Select attribute"
-                                value={attributes.find(
-                                  (option) => option.value === field.value
-                                )}
-                                onChange={(selectedOption) =>
-                                  field.onChange(selectedOption?.value)
-                                }
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`variants.${index}.attribute_options`}
+                        name={`variants.${index}.attributes`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Attribute Options</FormLabel>
                             <FormControl>
-                              <SelectCombobox
-                                isMulti
-                                options={attributeOptions}
-                                placeholder="Select attribute options"
-                                value={attributeOptions.filter((option) =>
-                                  field.value?.includes(option.value)
-                                )}
-                                onChange={(selectedOptions) => {
-                                  const selectedValues = selectedOptions.map(
-                                    (option) => option.value
-                                  )
-                                  field.onChange(selectedValues)
+                              <AsyncSelectCombobox
+                                defaultOptions={attributeValuesOptions}
+                                isLoading={isAttributeValuesLoading}
+                                onChange={(selectedOption) => {
+                                  const newAttributes = [
+                                    Number(selectedOption?.value),
+                                  ];
+
+                                  const updatedAttributes = [
+                                    ...new Set([
+                                      ...(field.value ?? []),
+                                      ...newAttributes,
+                                    ]),
+                                  ];
+
+                                  field.onChange(updatedAttributes);
                                 }}
                               />
                             </FormControl>
@@ -216,39 +275,147 @@ const AddProductForm = () => {
                           </FormItem>
                         )}
                       />
-
-                      {/* Add and Remove Variant */}
-                      <div className="flex justify-end gap-2 border-t pt-3">
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => remove(index)}
-                        >
-                          <Trash className="size-4" />
-                          <span>Remove</span>
-                        </Button>
-                        <Button
-                          type="button"
-                          size="sm"
-                          onClick={() =>
-                            append({
-                              attribute: '',
-                              attribute_options: [],
-                              images: [],
-                            })
-                          }
-                        >
-                          <Plus className="size-4" />
-                          <span>Add</span>
-                        </Button>
-                      </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              )}
-            </div>
+
+                {/* Product Pricing */}
+                <div className="card">
+                  <div className="card-header">
+                    <h5 className="card-title">Product Pricing</h5>
+                  </div>
+                  <div className="card-body">
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.price`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Current Price</FormLabel>
+                          <FormControl>
+                            <Input type="number" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.old_price`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Old Price</FormLabel>
+                          <FormControl>
+                            <Input type="number" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.cost`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Cost</FormLabel>
+                          <FormControl>
+                            <Input type="number" {...field} />
+                          </FormControl>
+                          <FormDescription>
+                            Customer won&apos;t see this
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+
+                {/* Inventory */}
+                <div className="card">
+                  <div className="card-header">
+                    <h5 className="card-title">Inventory</h5>
+                  </div>
+                  <div className="card-body">
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.sku`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>SKU (Stock keeping unit)</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.barcode`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Barcode (ISBN, UPC, GTIN, etc.)</FormLabel>
+                          <FormControl>
+                            <Input type="text" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.quantity`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Stock Quantity</FormLabel>
+                          <FormControl>
+                            <Input type="number" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.stock_alert`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Stock Alert</FormLabel>
+                          <FormControl>
+                            <Input type="number" {...field} />
+                          </FormControl>
+                          <FormDescription>
+                            Set a minimum threshold to get notified when product
+                            stock is low
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`variants.${index}.sku.stock_visibility`}
+                      render={({ field }) => (
+                        <FormItem className="flex gap-2 items-center mt-2 relative">
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <FormLabel className="text-sm font-normal !m-0">
+                            Stock visible to customers
+                          </FormLabel>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+
           <div className="lg:col-span-2 space-y-4">
             {/* Product Images */}
             <div className="card">
@@ -286,15 +453,12 @@ const AddProductForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <SelectCombobox
-                          options={brandOptions}
-                          placeholder="Select brand"
-                          value={brandOptions.find(
-                            (option) => option.value === field.value
-                          )}
-                          onChange={(selectedOption) =>
-                            field.onChange(selectedOption?.value)
-                          }
+                        <AsyncSelectCombobox
+                          defaultOptions={brandOptions}
+                          isLoading={isBrandLoading}
+                          onChange={(selectedOption) => {
+                            field.onChange(selectedOption?.value);
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
@@ -316,20 +480,101 @@ const AddProductForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <SelectCombobox
+                        <AsyncSelectCombobox
                           isMulti
-                          options={categoryOptions}
+                          defaultOptions={categoryOptions}
+                          isLoading={isCategoryLoading}
                           placeholder="Select categories"
-                          value={categoryOptions.filter((option) =>
+                          value={categoryOptions?.filter((option: any) =>
                             field.value?.includes(option.value)
                           )}
                           onChange={(selectedOptions) => {
                             const selectedValues = selectedOptions.map(
                               (option) => option.value
-                            )
-                            field.onChange(selectedValues)
+                            );
+                            field.onChange(selectedValues);
                           }}
                         />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Product Status */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">Product Status</h5>
+              </div>
+              <div className="card-body">
+                <FormField
+                  control={form.control}
+                  name="is_visible"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex gap-2 items-center relative">
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel className="text-dark-200 font-normal !m-0">
+                          Visible
+                        </FormLabel>
+                      </div>
+                      <FormDescription>
+                        This product will be hidden from all sales channels.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="published_at"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel isRequired>Availability</FormLabel>
+                      <FormControl>
+                        <Input type="date" className="block" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            {/* Product SEO */}
+            <div className="card">
+              <div className="card-header">
+                <h5 className="card-title">SEO (Search Engine Optimization)</h5>
+              </div>
+              <div className="card-body">
+                <FormField
+                  control={form.control}
+                  name="seo_title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>SEO Title</FormLabel>
+                      <FormControl>
+                        <Input type="text" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="seo_description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>SEO Description</FormLabel>
+                      <FormControl>
+                        <Textarea {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -340,17 +585,13 @@ const AddProductForm = () => {
           </div>
         </FormFieldset>
         <div className="flex justify-end mt-5">
-          <Button
-            type="submit"
-            value="publish"
-            isLoading={form.formState.isSubmitting}
-          >
+          <Button type="submit" value="publish" isLoading={isPending}>
             Add Product
           </Button>
         </div>
       </form>
     </Form>
-  )
-}
+  );
+};
 
-export default AddProductForm
+export default AddProductForm;

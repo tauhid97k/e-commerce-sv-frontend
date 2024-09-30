@@ -2,7 +2,9 @@
   "css.lint.unknownAtRules": "ignore",
   "cSpell.words": [
     "clsx",
+    "datetime",
     "ecommerce",
+    "GTIN",
     "headlessui",
     "hookform",
     "lucide",
