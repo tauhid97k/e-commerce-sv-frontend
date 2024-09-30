@@ -1,70 +1,86 @@
 // Pagination Link Interface
 interface PaginationLink {
-  url: string | null
-  label: string
-  active: boolean
+  url: string | null;
+  label: string;
+  active: boolean;
 }
 
 // Meta Data Interface
 interface Meta {
-  links: PaginationLink[]
-  current_page: number
-  last_page: number
-  total: number
+  links: PaginationLink[];
+  current_page: number;
+  last_page: number;
+  total: number;
 }
 
 // Paginated Data and Meta Type
 export type PaginatedData<TData> = {
-  data: TData[] // Actual data array
-  meta: Meta // Meta information including pagination links
-}
+  data: TData[]; // Actual data array
+  meta: Meta; // Meta information including pagination links
+};
 
 // User
 export type User = {
-  id: number
-  name: string
-  email: string
-  emailVerifiedAt: Date
-  role: string
-  permissions: string[]
-  status: string
-  createdAt: Date
-  updatedAt: Date
-}
+  id: number;
+  name: string;
+  email: string;
+  emailVerifiedAt: Date;
+  role: string;
+  permissions: string[];
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 // Category
 export type Category = {
-  id: number
-  name: string
-  parentCategoryName: string
-  slug: boolean
-  description: string | null
-  isVisible: boolean
-  seoTitle: string | null
-  seoDescription: string | null
-  createdAt: string
-  updatedAt: string
-}
+  id: number;
+  name: string;
+  parentCategoryName: string;
+  slug: boolean;
+  description: string | null;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
 
 // Brand
 export type Brand = {
-  id: number
-  name: string
-  slug: boolean
-  website: string
-  description: string | null
-  isVisible: boolean
-  seoTitle: string | null
-  seoDescription: string | null
-  createdAt: string
-  updatedAt: string
-}
+  id: number;
+  name: string;
+  slug: boolean;
+  website: string;
+  description: string | null;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
 
 // Attribute
 export type Attribute = {
-  id: number
-  name: string
-  totalValues: number
-  createdAt: string
-  updatedAt: string
-}
+  id: number;
+  name: string;
+  totalValues: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  slug: string;
+  brand?: string;
+  totalCategories: number;
+  totalVariants: number;
+  isNew: boolean;
+  isVisible: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+  publishedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
