@@ -9,6 +9,7 @@ import {
   Package,
   Settings,
   ShieldCheck,
+  ShoppingBag,
   Tag,
   UsersRound,
 } from "lucide-react";
@@ -28,6 +29,11 @@ const SidebarMenu = () => {
         { text: "All Products", href: "/dashboard/products" },
         { text: "Add Product", href: "/dashboard/products/add" },
       ],
+    },
+    {
+      text: "Orders",
+      href: "/dashboard/orders",
+      icon: <ShoppingBag className="icon" />,
     },
     {
       text: "Categories",

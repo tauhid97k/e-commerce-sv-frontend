@@ -86,6 +86,19 @@ export type Product = {
   updatedAt?: string;
 };
 
+// Order
+export type Order = {
+  id: number;
+  orderNumber: string;
+  totalItems: number;
+  totalPrice: number;
+  status: string;
+  currency: string;
+  shippingPrice: number;
+  shippingMethod: string;
+  note: string;
+};
+
 // Review
 export type Review = {
   id: number;

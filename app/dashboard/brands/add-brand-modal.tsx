@@ -1,96 +1,96 @@
-'use client'
+"use client";
 
-import * as z from 'zod'
-import { FormModal } from '@/components/form-modal'
-import { Textarea } from '@/components/textarea'
+import * as z from "zod";
+import { FormModal } from "@/components/form-modal";
+import { Textarea } from "@/components/textarea";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/form'
-import { getQueryClient } from '@/lib/query-client'
-import { FieldPath, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { brandValidator } from '@/validators/brandValidator'
-import { handleError, handleSuccess } from '@/lib/handleResponse'
-import { toast } from 'sonner'
-import { useAxios } from '@/lib/axios'
-import { useMutation } from '@tanstack/react-query'
-import { Input } from '@/components/input'
-import { Switch } from '@/components/switch'
-import slugify from 'slugify'
+} from "@/components/form";
+import { getQueryClient } from "@/lib/query-client";
+import { FieldPath, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { brandValidator } from "@/validators/brandValidator";
+import { handleError, handleSuccess } from "@/lib/handleResponse";
+import { toast } from "sonner";
+import { useAxios } from "@/lib/axios";
+import { useMutation } from "@tanstack/react-query";
+import { Input } from "@/components/input";
+import { Switch } from "@/components/switch";
+import slugify from "slugify";
 
 const AddBrandModal = ({
   isModalOpen,
   setModalOpen,
 }: {
-  isModalOpen: boolean
-  setModalOpen: (open: boolean) => void
+  isModalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
 }) => {
-  const axios = useAxios()
-  const queryClient = getQueryClient()
+  const axios = useAxios();
+  const queryClient = getQueryClient();
 
   // Add Brand
   const { mutate: addBrand, isPending } = useMutation({
     mutationFn: (formData: z.infer<typeof brandValidator>) =>
-      axios.post('/admin/brands', formData),
-  })
+      axios.post("/admin/brands", formData),
+  });
 
   // Form Config
   const form = useForm<z.infer<typeof brandValidator>>({
     resolver: zodResolver(brandValidator),
     defaultValues: {
-      name: '',
-      slug: '',
-      website: '',
-      description: '',
+      name: "",
+      slug: "",
+      website: "",
+      description: "",
       is_visible: false,
-      seo_title: '',
-      seo_description: '',
+      seo_title: "",
+      seo_description: "",
     },
-  })
+  });
 
   // Slug generation from brand name
   const handleSlug = (value: string) => {
-    const generatedSlug = slugify(value, { lower: true, strict: true })
-    form.setValue('slug', generatedSlug)
-  }
+    const generatedSlug = slugify(value, { lower: true, strict: true });
+    form.setValue("slug", generatedSlug);
+  };
 
   // Add Brand Form Handler
   const onSubmit = (values: z.infer<typeof brandValidator>) => {
     addBrand(values, {
       onError: (data) => {
-        const { validationErrors, error } = handleError(data)
+        const { validationErrors, error } = handleError(data);
         if (validationErrors.length) {
           validationErrors.map(({ field, message }) => {
             form.setError(field as FieldPath<typeof values>, {
               message,
-            })
-          })
+            });
+          });
         } else if (error) {
-          toast.error(error)
+          toast.error(error);
         }
       },
       onSuccess: (data) => {
-        const { message } = handleSuccess(data)
-        form.reset()
-        setModalOpen(false)
-        queryClient.invalidateQueries({ queryKey: ['brands'] })
+        const { message } = handleSuccess(data);
+        form.reset();
+        setModalOpen(false);
+        queryClient.invalidateQueries({ queryKey: ["brands"] });
         queryClient.invalidateQueries({
-          queryKey: ['brandOptions'],
-        })
-        toast.success(message)
+          queryKey: ["brandOptions"],
+        });
+        toast.success(message);
       },
-    })
-  }
+    });
+  };
 
   // Close Modal
   const closeModal = () => {
-    setModalOpen(false)
-    form.reset()
-  }
+    setModalOpen(false);
+    form.reset();
+  };
 
   return (
     <FormModal
@@ -113,8 +113,8 @@ const AddBrandModal = ({
                 type="text"
                 {...field}
                 onChange={(e) => {
-                  field.onChange(e)
-                  handleSlug(e.target.value)
+                  field.onChange(e);
+                  handleSlug(e.target.value);
                 }}
               />
             </FormControl>
@@ -203,7 +203,7 @@ const AddBrandModal = ({
         )}
       />
     </FormModal>
-  )
-}
+  );
+};
 
-export default AddBrandModal
+export default AddBrandModal;
